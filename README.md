@@ -8,7 +8,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 
 **`series` always needs to be a nested list even if you only need one!**
 
-### Examples
+### Basic Examples
 
 ```yaml
     ```chart
@@ -27,7 +27,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
     ```
 ```
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
-## Modificators
+### Advanced Modificators
 
 You can omit Data by typing for example 'null'. This will create a Gap inside the Chart.
 
