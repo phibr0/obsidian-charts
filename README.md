@@ -1,4 +1,4 @@
-# Obsidian-Charts
+# Obsidian-Charts ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts) ![](https://tokei.rs/b1/github/phibr0/obsidian-charts) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
 
 This Plugin lets you create Line and Bar Charts in Obsidian
 
