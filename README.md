@@ -4,7 +4,7 @@ This Plugin lets you create Line and Bar Charts in Obsidian
 
 ## Usage
 
-To create a Chart simply create a fenced Codeblock using 'chart' as the language. Inside of it you need to specify the `labels` (X-Axis), the `series` (Y-Axis / Data) and the `type`, either bar or line.
+To create a Chart simply create a fenced Codeblock using 'chart' as the language. Inside of it you need to specify the `labels` (X-Axis), the `series` (Y-Axis / Data) and the `type`, either bar or line, in valid YAML.
 
 **`series` always needs to be a nested list even if you only need one!**
 
