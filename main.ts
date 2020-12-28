@@ -1,112 +1,57 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, MarkdownPostProcessor, MarkdownPostProcessorContext, MarkdownPreviewRenderer, MarkdownRenderer, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import * as Chartist from 'chartist';
+import * as Yaml from 'yaml';
 
-interface MyPluginSettings {
-	mySetting: string;
-}
+export default class PlotPlugin extends Plugin {
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+	static postprocessor: MarkdownPostProcessor = (el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
+		// Assumption: One section always contains only the code block
+		
+		//Which Block should be replaced? -> Codeblocks
+		const blockToReplace = el.querySelector('pre')
+		if (!blockToReplace) return
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+		//Only Codeblocks with the Language "chart" should be replaced
+		const plotBlock = blockToReplace.querySelector('code.language-chart')
+		if (!plotBlock) return
 
-	async onload() {
-		console.log('loading plugin');
+		// Parse the Yaml content of the codeblock, if the labels or series is missing return too
+		const yaml = Yaml.parse(plotBlock.textContent)
+		if(!yaml || !yaml.labels || !yaml.series) return
+		console.log(yaml)
 
-		await this.loadSettings();
+		//create the new element
+		const destination = document.createElement('div')
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
+		if(yaml.type==='line') new Chartist.Line(destination, {
+			labels: yaml.labels,
+			series: yaml.series
+		}, {
+			plugins: [
+				
+			  ]
 		});
+		else if(yaml.type==='bar') new Chartist.Bar(destination, {
+			labels: yaml.labels,
+			series: yaml.series
+		}, {
+			plugins: [
 
-		this.addStatusBarItem().setText('Status Bar Text');
-
-		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
-			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
-				if (leaf) {
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-					return true;
-				}
-				return false;
-			}
+			  ]
 		});
+		else return
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		el.replaceChild(destination, blockToReplace)
+	}
 
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
-
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+	onload() {
+		console.log('loading plugin: chartist');
+		MarkdownPreviewRenderer.registerPostProcessor(PlotPlugin.postprocessor)
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		console.log('unloading plugin: chartist');
+		MarkdownPreviewRenderer.unregisterPostProcessor(PlotPlugin.postprocessor)
 	}
 
-	async loadSettings() {
-		this.settings = Object.assign(DEFAULT_SETTINGS, await this.loadData());
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
-}
-
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		let {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		let {contentEl} = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		let {containerEl} = this;
-
-		containerEl.empty();
-
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue('')
-				.onChange(async (value) => {
-					console.log('Secret: ' + value);
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
 }
