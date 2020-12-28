@@ -17,6 +17,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
     series: [[12, 5, 8, 8 , 5], [5, 8, 7, 9, 12]]
     ```
 ```
+![Barchart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/barChart.png)
 
 ```markdown
     ```chart
@@ -25,7 +26,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
     series: [[12, 5, 8, 8 , 5], [5, 8, 7, 9, 12]]
     ```
 ```
-
+![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
 ## Advanced
 
 You can omit Data by typing for example 'null'. This will create a Gap inside the Chart.
@@ -36,3 +37,5 @@ You can omit Data by typing for example 'null'. This will create a Gap inside th
     series: [[12, 5, null, 8 , 5], [null, 8, 7, 9, 12]]
     ```
 ```
+
+![Linechart with Gaps](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChartGap.png)
