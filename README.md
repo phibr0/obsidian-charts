@@ -10,7 +10,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 
 ### Examples
 
-```markdown
+```yaml
     ```chart
     type: bar
     labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
@@ -19,7 +19,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 ```
 ![Barchart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/barChart.png)
 
-```markdown
+```yaml
     ```chart
     type: line
     labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
@@ -30,7 +30,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 ## Advanced
 
 You can omit Data by typing for example 'null'. This will create a Gap inside the Chart.
-```markdown
+```yaml
     ```chart
     type: line
     labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
