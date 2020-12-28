@@ -6,7 +6,7 @@ export default class PlotPlugin extends Plugin {
 
 	static postprocessor: MarkdownPostProcessor = (el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
 		// Assumption: One section always contains only the code block
-		
+
 		//Which Block should be replaced? -> Codeblocks
 		const blockToReplace = el.querySelector('pre')
 		if (!blockToReplace) return
@@ -17,27 +17,27 @@ export default class PlotPlugin extends Plugin {
 
 		// Parse the Yaml content of the codeblock, if the labels or series is missing return too
 		const yaml = Yaml.parse(plotBlock.textContent)
-		if(!yaml || !yaml.labels || !yaml.series) return
+		if (!yaml || !yaml.labels || !yaml.series) return
 		console.log(yaml)
 
 		//create the new element
 		const destination = document.createElement('div')
 
-		if(yaml.type==='line') new Chartist.Line(destination, {
+		if (yaml.type === 'line') new Chartist.Line(destination, {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {
-			plugins: [
-				
-			  ]
+			lineSmooth: Chartist.Interpolation.cardinal({
+				fillHoles: yaml.fillGaps ?? false,
+			  }),
+			  low: yaml.low ?? null,
+			  showArea: yaml.showArea ?? false
 		});
-		else if(yaml.type==='bar') new Chartist.Bar(destination, {
+		else if (yaml.type === 'bar') new Chartist.Bar(destination, {
 			labels: yaml.labels,
 			series: yaml.series
-		}, {
-			plugins: [
-
-			  ]
+		}, {		
+			  low: yaml.low ?? null,
 		});
 		else return
 

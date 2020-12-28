@@ -27,9 +27,10 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
     ```
 ```
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
-### Advanced
+## Modificators
 
 You can omit Data by typing for example 'null'. This will create a Gap inside the Chart.
+
 ```yaml
     ```chart
     type: line
@@ -40,10 +41,26 @@ You can omit Data by typing for example 'null'. This will create a Gap inside th
 
 ![Linechart with Gaps](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChartGap.png)
 
+- To fill these Gaps you can add the Modifier `fillGaps: true`.
+- To show the Area under the Line you can add the Modifier `showArea: true`
+- To cut some Area under the Chart you can add the Modifier `low: n`, while n represents the y value (works with both Line and Bar Chart)
+
+__Full example:__
+
+```yaml
+    ```chart
+    type: line
+    labels: [Monday, Tuesday, Simon, Thursday, Friday]
+    series: [[12, 6, null, null, 5], [6, 8, 7, 9, 12]]
+    low: 5
+    fillGaps: true
+    showArea: true
+    ```
+```
 ## Roadmap
 
 - [ ] Animations
 - [ ] Create Chart from Table
 - [ ] Change Colors (Settings Page)
 - [ ] Autoresize
-- [ ] More Modificators (Area under Line, Fill Gaps, etc.)
+- [x] More Modificators (Area under Line, Fill Gaps, etc.)
