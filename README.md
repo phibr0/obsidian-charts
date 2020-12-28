@@ -50,7 +50,7 @@ __Full example:__
 ```yaml
     ```chart
     type: line
-    labels: [Monday, Tuesday, Simon, Thursday, Friday]
+    labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
     series: [[12, 6, null, null, 5], [6, 8, 7, 9, 12]]
     low: 5
     fillGaps: true
