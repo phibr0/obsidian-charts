@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-chartist",
 	"name": "Chartist Plugin",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"minAppVersion": "0.10.1",
 	"description": "This Plugin lets you create Charts with Chartist as its backend!",
 	"author": "phibr0",
