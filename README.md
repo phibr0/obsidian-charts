@@ -29,7 +29,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
 ### Advanced Modificators
 
-You can omit Data by typing for example 'null'. This will create a Gap inside the Chart.
+You can omit Data by typing for example 'null'. This will create a Gap inside the Chart (Anything that is not a Number should work).
 
 ```yaml
     ```chart
