@@ -38,6 +38,7 @@ export default class PlotPlugin extends Plugin {
 			series: yaml.series
 		}, {		
 			  low: yaml.low ?? null,
+			  stackBars: yaml.stacked ?? false
 		});
 		else return
 

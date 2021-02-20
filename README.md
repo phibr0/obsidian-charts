@@ -45,6 +45,8 @@ You can omit Data by typing for example 'null'. This will create a Gap inside th
 - To show the Area under the Line you can add the Modifier `showArea: true`
 - To cut some Area under the Chart you can add the Modifier `low: n`, while n represents the y value (works with both Line and Bar Chart)
 
+It is also possible to use the `stacked: bool` Property if used on a Bar chart to create stacked Bars.
+
 __Full example:__
 
 ```yaml
