@@ -29,7 +29,8 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
 ### Advanced Modificators
 
-You can omit Data by typing for example 'null'. This will create a Gap inside the Chart (Anything that is not a Number should work).
+- You can omit Data by typing for example 'null'. This will create a Gap inside the Chart (Anything that is not a Number should work).
+- To cut some Area under the Chart you can add the Modifier `low: n`, while n represents the y value (works with both Line and Bar Chart)
 
 ```yaml
     ```chart
@@ -39,13 +40,12 @@ You can omit Data by typing for example 'null'. This will create a Gap inside th
     ```
 ```
 
+#### Line Charts (Advanced)
+
 ![Linechart with Gaps](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChartGap.png)
 
-- To fill these Gaps you can add the Modifier `fillGaps: true`.
-- To show the Area under the Line you can add the Modifier `showArea: true`
-- To cut some Area under the Chart you can add the Modifier `low: n`, while n represents the y value (works with both Line and Bar Chart)
-
-It is also possible to use the `stacked: bool` Property if used on a Bar chart to create stacked Bars.
+- To fill these Gaps you can add the Modifier `fillGaps: true` (Default: `false`).
+- To show the Area under the Line you can add the Modifier `showArea: true` (Default: `false`).
 
 __Full example:__
 
@@ -59,6 +59,11 @@ __Full example:__
     showArea: true
     ```
 ```
+
+#### Bar Charts (Advanced)
+
+- It is also possible to use the `stacked: bool` Property if used on a Bar chart to create stacked Bars (Default: `false`).
+- There is the `horzizontal: bool` Property to create horizontal Bars (Default: `false`)
 ## Roadmap
 
 - [ ] Animations

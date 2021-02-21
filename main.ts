@@ -1,4 +1,4 @@
-import { App, MarkdownPostProcessor, MarkdownPostProcessorContext, MarkdownPreviewRenderer, MarkdownRenderer, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import {MarkdownPostProcessor, MarkdownPostProcessorContext, MarkdownPreviewRenderer, Plugin} from 'obsidian';
 import * as Chartist from 'chartist';
 import * as Yaml from 'yaml';
 
@@ -30,15 +30,16 @@ export default class PlotPlugin extends Plugin {
 			lineSmooth: Chartist.Interpolation.cardinal({
 				fillHoles: yaml.fillGaps ?? false,
 			  }),
-			  low: yaml.low ?? null,
+			  low: yaml.low,
 			  showArea: yaml.showArea ?? false
 		});
 		else if (yaml.type === 'bar') new Chartist.Bar(destination, {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {		
-			  low: yaml.low ?? null,
-			  stackBars: yaml.stacked ?? false
+			  low: yaml.low,
+			  stackBars: yaml.stacked ?? false,
+			  horizontalBars: yaml.horizontal ?? false
 		});
 		else return
 
