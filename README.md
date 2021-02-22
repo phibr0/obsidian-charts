@@ -66,8 +66,7 @@ __Full example:__
 - There is the `horzizontal: bool` Property to create horizontal Bars (Default: `false`)
 ## Roadmap
 
-- [ ] Animations
 - [ ] Create Chart from Table
 - [ ] Change Colors (Settings Page)
-- [ ] Autoresize
+- [ ] Autoresize (Currently the Chart doesnt resize if you open or close the sidebars)
 - [x] More Modificators (Area under Line, Fill Gaps, etc.)
