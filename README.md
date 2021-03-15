@@ -1,6 +1,6 @@
 # Obsidian-Charts ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts) ![](https://tokei.rs/b1/github/phibr0/obsidian-charts) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
 
-This Plugin lets you create Line and Bar Charts in Obsidian
+This Plugin lets you create Line and Bar Charts in [Obsidian](https://www.obsidian.md).
 
 ## Usage
 
@@ -64,6 +64,16 @@ __Full example:__
 
 - It is also possible to use the `stacked: bool` Property if used on a Bar chart to create stacked Bars (Default: `false`).
 - There is the `horzizontal: bool` Property to create horizontal Bars (Default: `false`)
+
+## How to install
+
+1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) Settings and **disable** Safe Mode
+2. Click on **Browse** and search for "Obsidian Charts"
+3. Click install
+
+![image](https://user-images.githubusercontent.com/59741989/111170893-b6076200-85a4-11eb-8c44-8e230b60203c.png)
+
+
 ## Roadmap
 
 - [ ] Create Chart from Table
