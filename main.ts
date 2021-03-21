@@ -2,7 +2,7 @@ import {MarkdownPostProcessor, MarkdownPostProcessorContext, MarkdownPreviewRend
 import * as Chartist from 'chartist';
 import * as Yaml from 'yaml';
 
-export default class PlotPlugin extends Plugin {
+export default class ChartPlugin extends Plugin {
 
 	static postprocessor: MarkdownPostProcessor = (el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
 		// Assumption: One section always contains only the code block
@@ -33,13 +33,21 @@ export default class PlotPlugin extends Plugin {
 			  low: yaml.low,
 			  showArea: yaml.showArea ?? false
 		});
-		else if (yaml.typetoLowerCase() === 'bar') new Chartist.Bar(destination, {
+		else if (yaml.type.toLowerCase() === 'bar') new Chartist.Bar(destination, {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {		
 			  low: yaml.low,
 			  stackBars: yaml.stacked ?? false,
 			  horizontalBars: yaml.horizontal ?? false
+		});
+		else if (yaml.type.toLowerCase() === 'pie') new Chartist.Pie(destination, {
+			labels: yaml.labels,
+			series: yaml.series
+		}, {		
+			labelInterpolationFnc: function(value: any) {
+				return value[0]
+			  }	  
 		});
 		else return
 
@@ -48,12 +56,12 @@ export default class PlotPlugin extends Plugin {
 
 	onload() {
 		console.log('loading plugin: chartist');
-		MarkdownPreviewRenderer.registerPostProcessor(PlotPlugin.postprocessor)
+		MarkdownPreviewRenderer.registerPostProcessor(ChartPlugin.postprocessor)
 	}
 
 	onunload() {
 		console.log('unloading plugin: chartist');
-		MarkdownPreviewRenderer.unregisterPostProcessor(PlotPlugin.postprocessor)
+		MarkdownPreviewRenderer.unregisterPostProcessor(ChartPlugin.postprocessor)
 	}
 
 }
