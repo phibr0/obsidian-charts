@@ -27,6 +27,19 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
     ```
 ```
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
+
+The Line Chart works a bit differently, it only accepts a single series Array. But before you start using it remember that Obsidian has the option to create Pie Charts via MermaidJS without any Plugins (<https://mermaid-js.github.io/mermaid/#/pie>).
+
+```yaml
+    ```chart
+    type: pie
+    labels: [Monday,Tuesday,Wednesday,Thursday]
+    series: [20,10,30,40]
+    ```
+```
+
+![Piechart](images/pieChart.png)
+
 ### Advanced Modificators
 
 - You can omit Data by typing for example 'null'. This will create a Gap inside the Chart (Anything that is not a Number should work).
@@ -73,10 +86,12 @@ __Full example:__
 
 ![image](https://user-images.githubusercontent.com/59741989/111170893-b6076200-85a4-11eb-8c44-8e230b60203c.png)
 
+## Customizing Charts
 
+You can edit the Stylesheet inside the Plugin folder (`.obsidian/plugins/obsidian-charts/styles.css`). The important Color Values are all located at the beginning.
 ## Roadmap
 
 - [ ] Create Chart from Table
-- [ ] Change Colors (Settings Page)
+- [x] Fixed CSS
 - [ ] Autoresize (Currently the Chart doesnt resize if you open or close the sidebars)
 - [x] More Modificators (Area under Line, Fill Gaps, etc.)
