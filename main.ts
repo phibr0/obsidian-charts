@@ -23,7 +23,7 @@ export default class PlotPlugin extends Plugin {
 		//create the new element
 		const destination = document.createElement('div')
 
-		if (yaml.type === 'line') new Chartist.Line(destination, {
+		if (yaml.type.toLowerCase() === 'line') new Chartist.Line(destination, {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {
@@ -33,7 +33,7 @@ export default class PlotPlugin extends Plugin {
 			  low: yaml.low,
 			  showArea: yaml.showArea ?? false
 		});
-		else if (yaml.type === 'bar') new Chartist.Bar(destination, {
+		else if (yaml.typetoLowerCase() === 'bar') new Chartist.Bar(destination, {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {		
