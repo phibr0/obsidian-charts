@@ -3,7 +3,7 @@
     "name": "Obsidian Charts",
     "version": "1.2.0",
     "minAppVersion": "0.10.1",
-    "description": "This Plugin lets you create Charts with Chartist as its backend!",
+    "description": "This Plugin lets you create Charts with Chartist as its Library!",
     "author": "phibr0",
     "authorUrl": "https://github.com/phibr0",
     "isDesktopOnly": false

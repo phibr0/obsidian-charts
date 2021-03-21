@@ -4,7 +4,7 @@ import * as Yaml from 'yaml';
 
 export default class ChartPlugin extends Plugin {
 
-	static postprocessor: MarkdownPostProcessor = (el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
+	static  postprocessor:  MarkdownPostProcessor =  async (el: HTMLElement, ctx: MarkdownPostProcessorContext) =>  {
 		// Assumption: One section always contains only the code block
 
 		//Which Block should be replaced? -> Codeblocks
@@ -16,12 +16,12 @@ export default class ChartPlugin extends Plugin {
 		if (!plotBlock) return
 
 		// Parse the Yaml content of the codeblock, if the labels or series is missing return too
-		const yaml = Yaml.parse(plotBlock.textContent)
+		const yaml = await Yaml.parse(plotBlock.textContent)
 		if (!yaml || !yaml.labels || !yaml.series) return
 		console.log(yaml)
 
 		//create the new element
-		const destination = document.createElement('div')
+		const destination =  document.createElement('div')
 
 		if (yaml.type.toLowerCase() === 'line') new Chartist.Line(destination, {
 			labels: yaml.labels,
