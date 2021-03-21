@@ -28,7 +28,7 @@ To create a Chart simply create a fenced Codeblock using 'chart' as the language
 ```
 ![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
 
-The Line Chart works a bit differently, it only accepts a single series Array. But before you start using it remember that Obsidian has the option to create Pie Charts via MermaidJS without any Plugins (<https://mermaid-js.github.io/mermaid/#/pie>).
+The Pie Chart works a bit differently, it only accepts a **single** `series` List. But before you start using it remember that Obsidian has the option to create Pie Charts via MermaidJS without any Plugins (<https://mermaid-js.github.io/mermaid/#/pie>).
 
 ```yaml
     ```chart
