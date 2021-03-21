@@ -31,7 +31,7 @@ export default class ChartPlugin extends Plugin {
 				fillHoles: yaml.fillGaps ?? false,
 			  }),
 			  low: yaml.low,
-			  showArea: yaml.showArea ?? false
+			  showArea: yaml.showArea ?? false,
 		});
 		else if (yaml.type.toLowerCase() === 'bar') new Chartist.Bar(destination, {
 			labels: yaml.labels,
@@ -45,13 +45,12 @@ export default class ChartPlugin extends Plugin {
 			labels: yaml.labels,
 			series: yaml.series
 		}, {		
-			labelInterpolationFnc: function(value: any) {
-				return value[0]
-			  }	  
+			labelDirection: 'explode',
 		});
 		else return
 
 		el.replaceChild(destination, blockToReplace)
+		return
 	}
 
 	onload() {
