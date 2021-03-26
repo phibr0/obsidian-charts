@@ -89,7 +89,7 @@ __Full example:__
 
 ## Customizing Charts
 
-You can edit the Stylesheet inside the Plugin folder (`.obsidian/plugins/obsidian-charts/styles.css`). The important Color Values are all located at the beginning.
+You can view the Stylesheet inside the Plugin folder (`.obsidian/plugins/obsidian-charts/styles.css`). The important Color Values are all located at the beginning.
 ## Roadmap
 
 - [ ] Create Chart from Table
