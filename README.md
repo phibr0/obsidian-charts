@@ -83,6 +83,7 @@ __Full example:__
 1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) Settings and **disable** Safe Mode
 2. Click on **Browse** and search for "Obsidian Charts"
 3. Click install
+4. Toggle the Plugin on in the **Community Plugins** Tab
 
 ![image](https://user-images.githubusercontent.com/59741989/111170893-b6076200-85a4-11eb-8c44-8e230b60203c.png)
 
