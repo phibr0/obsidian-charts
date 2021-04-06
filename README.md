@@ -1,82 +1,267 @@
-# Obsidian-Charts ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts) ![](https://tokei.rs/b1/github/phibr0/obsidian-charts) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
+# Obsidian-Charts ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
 
-This Plugin lets you create Line and Bar Charts in [Obsidian](https://www.obsidian.md).
+This Plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
 
 ## Usage
 
-To create a Chart simply create a fenced Codeblock using 'chart' as the language. Inside of it you need to specify the `labels` (X-Axis), the `series` (Y-Axis / Data) and the `type`, either bar or line, in valid YAML.
-
-**`series` always needs to be a nested list even if you only need one!**
-
-### Basic Examples
+To create a Chart within Obsidian a Codeblock of the type `chart` is used. The Properties are set using YAML Syntax. Example:
 
 ```yaml
     ```chart
-    type: bar
-    labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
-    series: [[12, 5, 8, 8 , 5], [5, 8, 7, 9, 12]]
+        type: ""
+        labels: []
+        series:
+          - title: ""
+            data: []
+          - title: ""
+            data: []
+
     ```
 ```
-![Barchart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/barChart.png)
+
+The `title` Property *can* be omitted, but it is not advised to do so.
+
+> You might **not** be able to copy the Examples directly into Obsidian, the Indentation is probably wrong and Obsidian tries to convert pasted Text to Markdown, which escapes a few important characters.
+
+### Legacy Mode
+
+For anyone who has used this Plugin before the Release of v2.0.0, there is a legacy Mode so you don't need to manually convert your old Charts to the new Syntax. Just add `legacy: true` to your old Charts. **Please do not use this for new Charts, legacy Mode might get removed in future Versions.**
+### Chart Types
+
+This Plugin provides 6 different Variants. The type of a Chart is set by the `type: {Type}` Property. 
+
+#### Line Chart
 
 ```yaml
     ```chart
-    type: line
-    labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
-    series: [[12, 5, 8, 8 , 5], [5, 8, 7, 9, 12]]
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [1,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,1]
+          - title: Title 3
+	        data: [8,2,5,-1,4]
     ```
 ```
-![Linechart](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChart.png)
 
-The Pie Chart works a bit differently, it only accepts a **single** `series` List. But before you start using it remember that Obsidian has the option to create Pie Charts via MermaidJS without any Plugins (<https://mermaid-js.github.io/mermaid/#/pie>).
+The above example Code will render a *Line Chart* with 3 individual traces, titled "Title 1", "Title 2" and "Title 3".
+
+![Line Chart Example Image](images/linechart.png)
+
+*See also: [Modifiers](#Modifiers)*
+
+#### Bar Chart
 
 ```yaml
     ```chart
-    type: pie
-    labels: [Monday,Tuesday,Wednesday,Thursday]
-    series: [20,10,30,40]
+        type: bar
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, "next Week", "next Month"]
+        series:
+          - title: Title 1
+            data: [1,2,3,4,5,6,7,8,9]
+          - title: Title 2
+            data: [5,4,3,2,1,0,-1,-2,-3]
     ```
 ```
 
-![Piechart](images/pieChart.png)
+The above example Code will render a *Bar Chart*.
 
-### Advanced Modificators
+![Bar Chart Example Image](images/barchart.png)
 
-- You can omit Data by typing for example 'null'. This will create a Gap inside the Chart (Anything that is not a Number should work).
-- To cut some Area under the Chart you can add the Modifier `low: n`, while n represents the y value (works with both Line and Bar Chart)
+#### Radar Chart
 
 ```yaml
     ```chart
-    type: line
-    labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
-    series: [[12, 5, null, 8 , 5], [null, 8, 7, 9, 12]]
+        type: radar
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+	        data: [1,2,3,4,5]
+          - title: Title 2
+	        data: [5,4,3,2,1]
+        width: 40%
     ```
 ```
 
-#### Line Charts (Advanced)
+The above example Code will render a *Radar Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise.
 
-![Linechart with Gaps](https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/lineChartGap.png)
+![Radar Chart Example Image](images/radarchart.png)
 
-- To fill these Gaps you can add the Modifier `fillGaps: true` (Default: `false`).
-- To show the Area under the Line you can add the Modifier `showArea: true` (Default: `false`).
-
-__Full example:__
+#### Doughnut and Pie Chart
 
 ```yaml
     ```chart
-    type: line
-    labels: [Monday, Tuesday, Wednesday, Thursday, Friday]
-    series: [[12, 6, null, null, 5], [6, 8, 7, 9, 12]]
-    low: 5
-    fillGaps: true
-    showArea: true
+        type: pie
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+	        data: [1,2,3,4,5]
+          - title: Title 2
+	        data: [5,4,3,2,1]
+        width: 40%
+        labelColors: true
     ```
 ```
 
-#### Bar Charts (Advanced)
+The above example Code will render a *Pie Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
 
-- It is also possible to use the `stacked: bool` Property if used on a Bar chart to create stacked Bars (Default: `false`).
-- There is the `horzizontal: bool` Property to create horizontal Bars (Default: `false`)
+![Pie Chart Example Image](images/piechart.png)
+
+```yaml
+    ```chart
+        type: doughnut
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+	        data: [1,2,3,4,5]
+          - title: Title 2
+	        data: [5,4,3,2,1]
+        width: 40%
+        labelColors: true
+    ```
+```
+
+The above example Code will render a *Doughnut Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
+
+![Doughnut Chart Example Image](images/doughnutchart.png)
+
+#### Polar Area Chart
+
+```yaml
+    ```chart
+    type: polarArea
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+      - title: Title 1
+        data: [1,2,3,4,5]
+      - title: Title 2
+        data: [5,4,3,2,1]
+    labelColors: true
+    width: 40%
+    ```
+```
+
+The above example Code will render a *Polar Area Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
+
+![Polar Area Chart Example Image](images/polarareachart.png)
+
+### Modifiers
+
+#### `width` Modifier
+
+The `width` Modifier is used to set the width of **any** Chart. It is advised to use it for the following Charts:
+
+- Pie Chart
+- Doughnut Chart
+- Radar Chart
+- Polar Area Chart
+
+The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px`) or dynamic Values (e.g `40%`).
+
+- Default: `100%`
+
+#### Example
+
+```yaml
+    ```chart
+    type: polarArea
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+      - title: Title 1
+        data: [1,2,3,4,5]
+      - title: Title 2
+        data: [5,4,3,2,1]
+    width: 40%
+    ```
+```
+
+#### `fill` Modifier
+
+The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
+
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+##### Example
+
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [1,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,1]
+          - title: Title 3
+	        data: [8,2,5,-1,4]
+        fill: true
+    ```
+```
+
+#### `tension` Modifier
+
+The `tension` Modifier is used in Line Charts to set the tension of the Traces to the given points. A Value of 0 means no smoothness at all, a value of 1 is maximum smoothness.
+
+- Expected: Double (0-1)
+- Default: 0
+
+##### Example
+
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [1,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,1]
+          - title: Title 3
+	        data: [8,2,5,-1,4]
+        tension: 0.5
+    ```
+```
+
+#### `beginAtZero` Modifier
+
+The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwise the Chart will cut out all unused space.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+##### Example
+
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [4,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,2]
+          - title: Title 3
+	        data: [8,2,5,3,4]
+        beginAtZero: true
+    ```
+```
+
+## Customization
+
+### Changing Colors
+
+Right now the Colors cannot be changed, I am working on implementing Color Pickers for a Settings Tab, so the Colors can be customized again.
+
+### Interactivity
+
+**All** Charts are interactive.
+
+- You can click the different Graphs inside the Legend to make them dissappear (and reappear)
+- You can hover over the Chart to see more detailed information
 
 ## How to install
 
@@ -85,14 +270,8 @@ __Full example:__
 3. Click install
 4. Toggle the Plugin on in the **Community Plugins** Tab
 
-![image](https://user-images.githubusercontent.com/59741989/111170893-b6076200-85a4-11eb-8c44-8e230b60203c.png)
+## Support me
 
-## Customizing Charts
+If you find this Plugin helpful, consider supporting me:
 
-You can view the Stylesheet inside the Plugin folder (`.obsidian/plugins/obsidian-charts/styles.css`). The important Color Values are all located at the beginning.
-## Roadmap
-
-- [ ] Create Chart from Table
-- [x] Fixed CSS
-- [ ] Autoresize (Currently the Chart doesnt resize if you open or close the sidebars)
-- [x] More Modificators (Area under Line, Fill Gaps, etc.)
+<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a pizza&emoji=🍕&slug=phibr0&button_colour=FFDD00&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=ffffff"></a>
