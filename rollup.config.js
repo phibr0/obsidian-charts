@@ -10,7 +10,7 @@ if you want to view the source visit the plugins github repository (https://gith
 `;
 
 export default {
-    input: 'main.ts',
+    input: 'src/main.ts',
     output: {
         dir: '.',
         sourcemap: 'inline',

@@ -1,8 +1,8 @@
 {
     "id": "obsidian-charts",
     "name": "Obsidian Charts",
-    "version": "1.2.2",
-    "minAppVersion": "0.11.10",
+    "version": "2.0.0",
+    "minAppVersion": "0.11.9",
     "description": "This Plugin lets you create Charts with Chartist as its library!",
     "author": "phibr0",
     "authorUrl": "https://github.com/phibr0",
