@@ -162,7 +162,7 @@ The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px
 
 - Default: `100%`
 
-#### Example
+##### Example
 
 ```yaml
     ```chart
