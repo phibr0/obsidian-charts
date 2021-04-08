@@ -1,7 +1,7 @@
 import { MarkdownPostProcessorContext, Plugin, Setting, SettingTab } from 'obsidian';
 import * as Yaml from 'yaml';
 import * as Chartist from 'chartist';
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartOptions, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 
@@ -120,22 +120,53 @@ export default class ChartPlugin extends Plugin {
 			});
 		}
 
-		const chartOptions = {
-			type: yaml.type,
-			data: {
-				labels: yaml.labels,
-				datasets: datasets
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: yaml.beginAtZero ?? false,
-						grid: { color: "rgba(122,122,122,0.3)" }
-					},
-					x: { grid: { color: "rgba(122,122,122,0.3)" } }
+		let chartOptions;
+
+		if (yaml.type == 'radar' || yaml.type == 'polarArea') {
+			chartOptions = {
+				type: yaml.type,
+				data: {
+					labels: yaml.labels,
+					datasets: datasets
+				},
+				options: {
+					scales: {
+						r: {
+							grid: { color: 'rgba(122,122,122,0.3)' },
+							beginAtZero: yaml.beginAtZero
+						},
+					}
 				}
-			}
-		};
+			};
+		} else if (yaml.type == 'bar' || yaml.type == 'line') {
+			chartOptions = {
+				type: yaml.type,
+				data: {
+					labels: yaml.labels,
+					datasets: datasets
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: yaml.beginAtZero,
+							grid: { color: 'rgba(122,122,122,0.3)' }
+						},
+						x: {
+							grid: { color: 'rgba(122,122,122,0.3)' }
+						}
+					}
+				}
+			};
+		} else {
+			chartOptions = {
+				type: yaml.type,
+				data: {
+					labels: yaml.labels,
+					datasets: datasets
+				},
+				options: {}
+			};
+		}
 
 		new Chart(destinationContext, chartOptions);
 
