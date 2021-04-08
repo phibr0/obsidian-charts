@@ -42,7 +42,7 @@ This Plugin provides 6 different Variants. The type of a Chart is set by the `ty
           - title: Title 2
             data: [5,4,3,2,1]
           - title: Title 3
-	        data: [8,2,5,-1,4]
+            data: [8,2,5,-1,4]
     ```
 ```
 
@@ -78,9 +78,9 @@ The above example Code will render a *Bar Chart*.
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
         series:
           - title: Title 1
-	        data: [1,2,3,4,5]
+            data: [1,2,3,4,5]
           - title: Title 2
-	        data: [5,4,3,2,1]
+            data: [5,4,3,2,1]
         width: 40%
     ```
 ```
@@ -97,9 +97,9 @@ The above example Code will render a *Radar Chart*, a `width` Modifier is alread
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
         series:
           - title: Title 1
-	        data: [1,2,3,4,5]
+            data: [1,2,3,4,5]
           - title: Title 2
-	        data: [5,4,3,2,1]
+            data: [5,4,3,2,1]
         width: 40%
         labelColors: true
     ```
@@ -115,9 +115,9 @@ The above example Code will render a *Pie Chart*, a `width` Modifier is already 
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
         series:
           - title: Title 1
-	        data: [1,2,3,4,5]
+            data: [1,2,3,4,5]
           - title: Title 2
-	        data: [5,4,3,2,1]
+            data: [5,4,3,2,1]
         width: 40%
         labelColors: true
     ```
@@ -162,7 +162,7 @@ The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px
 
 - Default: `100%`
 
-#### Example
+##### Example
 
 ```yaml
     ```chart
@@ -197,7 +197,7 @@ The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
           - title: Title 2
             data: [5,4,3,2,1]
           - title: Title 3
-	        data: [8,2,5,-1,4]
+            data: [8,2,5,-1,4]
         fill: true
     ```
 ```
@@ -221,7 +221,7 @@ The `tension` Modifier is used in Line Charts to set the tension of the Traces t
           - title: Title 2
             data: [5,4,3,2,1]
           - title: Title 3
-	        data: [8,2,5,-1,4]
+            data: [8,2,5,-1,4]
         tension: 0.5
     ```
 ```
@@ -245,7 +245,7 @@ The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwi
           - title: Title 2
             data: [5,4,3,2,2]
           - title: Title 3
-	        data: [8,2,5,3,4]
+            data: [8,2,5,3,4]
         beginAtZero: true
     ```
 ```
