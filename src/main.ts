@@ -1,4 +1,4 @@
-import { MarkdownPostProcessorContext, Plugin} from 'obsidian';
+import { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import * as Yaml from 'yaml';
 import * as Chartist from 'chartist';
 import { renderChart } from './charting/chartRenderer';
@@ -20,39 +20,9 @@ export default class ChartPlugin extends Plugin {
 		if (!yaml || !yaml.labels || !yaml.series || !yaml.type) {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">Missing type, labels or series</code>";
 		}
-		console.log(yaml);
 
 		if (yaml.legacy == true) {
-			const destination = document.createElement('div');
-
-			if (yaml.type.toLowerCase() === 'line') new Chartist.Line(destination, {
-				labels: yaml.labels,
-				series: yaml.series
-			}, {
-				lineSmooth: Chartist.Interpolation.cardinal({
-					fillHoles: yaml.fillGaps ?? false,
-				}),
-				low: yaml.low,
-				showArea: yaml.showArea ?? false,
-			});
-			else if (yaml.type.toLowerCase() === 'bar') new Chartist.Bar(destination, {
-				labels: yaml.labels,
-				series: yaml.series
-			}, {
-				low: yaml.low,
-				stackBars: yaml.stacked ?? false,
-				horizontalBars: yaml.horizontal ?? false
-			});
-			else if (yaml.type.toLowerCase() === 'pie') new Chartist.Pie(destination, {
-				labels: yaml.labels,
-				series: yaml.series
-			}, {
-				labelDirection: 'explode',
-			});
-			else return;
-
-			el.appendChild(destination);
-			return;
+			legacyRenderer(yaml, el);
 		}
 
 		renderChart(yaml, el);
