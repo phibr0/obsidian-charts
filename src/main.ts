@@ -1,39 +1,8 @@
-import { MarkdownPostProcessorContext, Plugin, Setting, SettingTab } from 'obsidian';
+import { MarkdownPostProcessorContext, Plugin} from 'obsidian';
 import * as Yaml from 'yaml';
 import * as Chartist from 'chartist';
-import { Chart, ChartOptions, registerables } from 'chart.js';
-Chart.register(...registerables);
-
-
-interface ChartPluginSettings {
-	color1: string;
-	borderColor1: string;
-	color2: string;
-	borderColor2: string;
-	color3: string;
-	borderColor3: string;
-	color4: string;
-	borderColor4: string;
-	color5: string;
-	borderColor5: string;
-	color6: string;
-	borderColor6: string;
-}
-
-const DEFAULT_SETTINGS: ChartPluginSettings = {
-	borderColor1: 'rgba(255, 99, 132, 0.2)',
-	borderColor2: 'rgba(54, 162, 235, 0.2)',
-	borderColor3: 'rgba(255, 206, 86, 0.2)',
-	borderColor4: 'rgba(75, 192, 192, 0.2)',
-	borderColor5: 'rgba(153, 102, 255, 0.2)',
-	borderColor6: 'rgba(255, 159, 64, 0.2)',
-	color1: 'rgba(255, 99, 132, 1)',
-	color2: 'rgba(54, 162, 235, 1)',
-	color3: 'rgba(255, 206, 86, 1)',
-	color4: 'rgba(75, 192, 192, 1)',
-	color5: 'rgba(153, 102, 255, 1)',
-	color6: 'rgba(255, 159, 64, 1)'
-}
+import { renderChart } from './charting/chartRenderer';
+import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
 
 export default class ChartPlugin extends Plugin {
 
@@ -86,94 +55,7 @@ export default class ChartPlugin extends Plugin {
 			return;
 		}
 
-		//create the new canvas element
-		const destination = document.createElement('canvas');
-		const destinationContext = destination.getContext("2d");
-
-		const colors = [
-			'rgba(255, 99, 132, 0.2)',
-			'rgba(54, 162, 235, 0.2)',
-			'rgba(255, 206, 86, 0.2)',
-			'rgba(75, 192, 192, 0.2)',
-			'rgba(153, 102, 255, 0.2)',
-			'rgba(255, 159, 64, 0.2)'
-		];
-		const borderColors = [
-			'rgba(255, 99, 132, 1)',
-			'rgba(54, 162, 235, 1)',
-			'rgba(255, 206, 86, 1)',
-			'rgba(75, 192, 192, 1)',
-			'rgba(153, 102, 255, 1)',
-			'rgba(255, 159, 64, 1)'
-		];
-
-		const datasets = [];
-		for (let i = 0; yaml.series.length > i; i++) {
-			datasets.push({
-				label: yaml.series[i].title ?? "",
-				data: yaml.series[i].data,
-				backgroundColor: yaml.labelColors ? colors : colors[i],
-				borderColor: yaml.labelColors ? borderColors : borderColors[i],
-				borderWidth: 1,
-				fill: yaml.fill ?? false,
-				tension: yaml.tension ?? 0,
-			});
-		}
-
-		let chartOptions;
-
-		if (yaml.type == 'radar' || yaml.type == 'polarArea') {
-			chartOptions = {
-				type: yaml.type,
-				data: {
-					labels: yaml.labels,
-					datasets: datasets
-				},
-				options: {
-					scales: {
-						r: {
-							grid: { color: 'rgba(122,122,122,0.3)' },
-							beginAtZero: yaml.beginAtZero
-						},
-					}
-				}
-			};
-		} else if (yaml.type == 'bar' || yaml.type == 'line') {
-			chartOptions = {
-				type: yaml.type,
-				data: {
-					labels: yaml.labels,
-					datasets: datasets
-				},
-				options: {
-					scales: {
-						y: {
-							beginAtZero: yaml.beginAtZero,
-							grid: { color: 'rgba(122,122,122,0.3)' }
-						},
-						x: {
-							grid: { color: 'rgba(122,122,122,0.3)' }
-						}
-					}
-				}
-			};
-		} else {
-			chartOptions = {
-				type: yaml.type,
-				data: {
-					labels: yaml.labels,
-					datasets: datasets
-				},
-				options: {}
-			};
-		}
-
-		new Chart(destinationContext, chartOptions);
-
-		el.appendChild(destination);
-
-		destination.parentElement.style.width = yaml.width;
-		destination.parentElement.style.margin = "auto";
+		renderChart(yaml, el);
 
 		return;
 	}
