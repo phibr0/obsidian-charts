@@ -1,4 +1,6 @@
-function legacyRenderer(yaml: any, el: HTMLElement) {
+import * as Chartist from "chartist";
+
+export function legacyRenderer(yaml: any, el: HTMLElement) {
     const destination = document.createElement('div');
 
     if (yaml.type.toLowerCase() === 'line') new Chartist.Line(destination, {

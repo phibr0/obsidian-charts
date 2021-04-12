@@ -3,6 +3,7 @@ import * as Yaml from 'yaml';
 import * as Chartist from 'chartist';
 import { renderChart } from './charting/chartRenderer';
 import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
+import { legacyRenderer } from './charting/legacyRenderer';
 
 export default class ChartPlugin extends Plugin {
 
@@ -17,16 +18,18 @@ export default class ChartPlugin extends Plugin {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">" + error + "</code>";
 			return;
 		}
+		
 		if (!yaml || !yaml.labels || !yaml.series || !yaml.type) {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">Missing type, labels or series</code>";
+			return;
 		}
 
 		if (yaml.legacy == true) {
 			legacyRenderer(yaml, el);
+			return;
 		}
 
 		renderChart(yaml, el);
-
 		return;
 	}
 
