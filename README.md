@@ -6,7 +6,7 @@ This Plugin lets you create interactive Charts in [Obsidian](https://www.obsidia
 
 To create a Chart within Obsidian a Codeblock of the type `chart` is used. The Properties are set using YAML Syntax. Example:
 
-```yaml
+````yaml
     ```chart
         type: ""
         labels: []
@@ -17,22 +17,23 @@ To create a Chart within Obsidian a Codeblock of the type `chart` is used. The P
             data: []
 
     ```
-```
+````
 
-The `title` Property *can* be omitted, but it is not advised to do so.
+The `title` Property _can_ be omitted, but it is not advised to do so.
 
 > You might **not** be able to copy the Examples directly into Obsidian, the Indentation is probably wrong and Obsidian tries to convert pasted Text to Markdown, which escapes a few important characters.
 
 ### Legacy Mode
 
 For anyone who has used this Plugin before the Release of v2.0.0, there is a legacy Mode so you don't need to manually convert your old Charts to the new Syntax. Just add `legacy: true` to your old Charts. **Please do not use this for new Charts, legacy Mode might get removed in future Versions.**
+
 ### Chart Types
 
-This Plugin provides 6 different Variants. The type of a Chart is set by the `type: {Type}` Property. 
+This Plugin provides 6 different Variants. The type of a Chart is set by the `type: {Type}` Property.
 
 #### Line Chart
 
-```yaml
+````yaml
     ```chart
         type: line
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -44,17 +45,17 @@ This Plugin provides 6 different Variants. The type of a Chart is set by the `ty
           - title: Title 3
             data: [8,2,5,-1,4]
     ```
-```
+````
 
-The above example Code will render a *Line Chart* with 3 individual traces, titled "Title 1", "Title 2" and "Title 3".
+The above example Code will render a _Line Chart_ with 3 individual traces, titled "Title 1", "Title 2" and "Title 3".
 
 ![Line Chart Example Image](images/linechart.png)
 
-*See also: [Modifiers](#Modifiers)*
+_See also: [Modifiers](#Modifiers)_
 
 #### Bar Chart
 
-```yaml
+````yaml
     ```chart
         type: bar
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday, Saturday, Sunday, "next Week", "next Month"]
@@ -64,15 +65,15 @@ The above example Code will render a *Line Chart* with 3 individual traces, titl
           - title: Title 2
             data: [5,4,3,2,1,0,-1,-2,-3]
     ```
-```
+````
 
-The above example Code will render a *Bar Chart*.
+The above example Code will render a _Bar Chart_.
 
 ![Bar Chart Example Image](images/barchart.png)
 
 #### Radar Chart
 
-```yaml
+````yaml
     ```chart
         type: radar
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -83,15 +84,15 @@ The above example Code will render a *Bar Chart*.
             data: [5,4,3,2,1]
         width: 40%
     ```
-```
+````
 
-The above example Code will render a *Radar Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise.
+The above example Code will render a _Radar Chart_, a `width` Modifier is already added, since this Chart would be way to big otherwise.
 
 ![Radar Chart Example Image](images/radarchart.png)
 
 #### Doughnut and Pie Chart
 
-```yaml
+````yaml
     ```chart
         type: pie
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -103,13 +104,13 @@ The above example Code will render a *Radar Chart*, a `width` Modifier is alread
         width: 40%
         labelColors: true
     ```
-```
+````
 
-The above example Code will render a *Pie Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
+The above example Code will render a _Pie Chart_, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
 
 ![Pie Chart Example Image](images/piechart.png)
 
-```yaml
+````yaml
     ```chart
         type: doughnut
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -121,15 +122,15 @@ The above example Code will render a *Pie Chart*, a `width` Modifier is already 
         width: 40%
         labelColors: true
     ```
-```
+````
 
-The above example Code will render a *Doughnut Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
+The above example Code will render a _Doughnut Chart_, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
 
 ![Doughnut Chart Example Image](images/doughnutchart.png)
 
 #### Polar Area Chart
 
-```yaml
+````yaml
     ```chart
     type: polarArea
     labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -141,9 +142,9 @@ The above example Code will render a *Doughnut Chart*, a `width` Modifier is alr
     labelColors: true
     width: 40%
     ```
-```
+````
 
-The above example Code will render a *Polar Area Chart*, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
+The above example Code will render a _Polar Area Chart_, a `width` Modifier is already added, since this Chart would be way to big otherwise. The Property `labelColors` is also set to `true`, which is the desired behaviour most of the time.
 
 ![Polar Area Chart Example Image](images/polarareachart.png)
 
@@ -164,7 +165,7 @@ The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px
 
 ##### Example
 
-```yaml
+````yaml
     ```chart
     type: polarArea
     labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -175,19 +176,18 @@ The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px
         data: [5,4,3,2,1]
     width: 40%
     ```
-```
+````
 
 #### `fill` Modifier
 
 The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
-
 
 - Expected: `boolean` (`true` or `false`)
 - Default: `false`
 
 ##### Example
 
-```yaml
+````yaml
     ```chart
         type: line
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -200,7 +200,7 @@ The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
             data: [8,2,5,-1,4]
         fill: true
     ```
-```
+````
 
 #### `tension` Modifier
 
@@ -211,7 +211,7 @@ The `tension` Modifier is used in Line Charts to set the tension of the Traces t
 
 ##### Example
 
-```yaml
+````yaml
     ```chart
         type: line
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -224,7 +224,7 @@ The `tension` Modifier is used in Line Charts to set the tension of the Traces t
             data: [8,2,5,-1,4]
         tension: 0.5
     ```
-```
+````
 
 #### `beginAtZero` Modifier
 
@@ -235,7 +235,7 @@ The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwi
 
 ##### Example
 
-```yaml
+````yaml
     ```chart
         type: line
         labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
@@ -248,7 +248,7 @@ The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwi
             data: [8,2,5,3,4]
         beginAtZero: true
     ```
-```
+````
 
 ## Customization
 

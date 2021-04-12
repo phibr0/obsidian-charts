@@ -4,6 +4,7 @@ import * as Chartist from 'chartist';
 import { renderChart } from './charting/chartRenderer';
 import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
 import { legacyRenderer } from './charting/legacyRenderer';
+import { ChartSettingTab } from './ui/settings';
 
 export default class ChartPlugin extends Plugin {
 
@@ -45,7 +46,7 @@ export default class ChartPlugin extends Plugin {
 		console.log('loading plugin: Obsidian Charts');
 
 		await this.loadSettings()
-		//this.addSettingTab(new ChartSettingTab(this.app, this));
+		this.addSettingTab(new ChartSettingTab(this.app, this));
 		this.registerMarkdownCodeBlockProcessor('chart', ChartPlugin.postprocessor);
 	}
 
