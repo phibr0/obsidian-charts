@@ -135,7 +135,16 @@ export default class ChartPlugin extends Plugin {
 							grid: { color: 'rgba(122,122,122,0.3)' },
 							beginAtZero: yaml.beginAtZero
 						},
-					}
+					},
+          plugins: {
+            legend: {
+              display: yaml.legendDisplay,
+              position: yaml.legendPosition
+            }
+          },
+          layout: {
+            padding: yaml.padding
+          }
 				}
 			};
 		} else if (yaml.type == 'bar' || yaml.type == 'line') {
@@ -146,15 +155,43 @@ export default class ChartPlugin extends Plugin {
 					datasets: datasets
 				},
 				options: {
+          indexAxis: yaml.indexAxis,
 					scales: {
 						y: {
+              min: yaml.yMin,
+              max: yaml.yMax,
+              reverse: yaml.yReverse,
+              ticks: {
+                display: yaml.yTickDisplay,
+                padding: yaml.yTickPadding
+              },
+              display: yaml.yDisplay,
+              stacked: yaml.stacked, 
 							beginAtZero: yaml.beginAtZero,
 							grid: { color: 'rgba(122,122,122,0.3)' }
 						},
 						x: {
+              min: yaml.xMin,
+              max: yaml.xMax,
+              reverse: yaml.xReverse,
+              ticks: {
+                display: yaml.xTickDisplay,
+                padding: yaml.xTickPadding
+              },
+              display: yaml.xDisplay,
+              stacked: yaml.stacked,
 							grid: { color: 'rgba(122,122,122,0.3)' }
 						}
-					}
+					}, 
+          plugins: {
+            legend: {
+              display: yaml.legendDisplay,
+              position: yaml.legendPosition
+            }
+          },
+          layout: {
+            padding: yaml.padding
+          }
 				}
 			};
 		} else {
