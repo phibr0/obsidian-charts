@@ -138,7 +138,7 @@ export default class ChartPlugin extends Plugin {
 					},
           plugins: {
             legend: {
-              display: yaml.legendDisplay,
+              display: yaml.legend,
               position: yaml.legendPosition
             }
           },
@@ -185,7 +185,7 @@ export default class ChartPlugin extends Plugin {
 					}, 
           plugins: {
             legend: {
-              display: yaml.legendDisplay,
+              display: yaml.legend,
               position: yaml.legendPosition
             }
           },
@@ -201,7 +201,17 @@ export default class ChartPlugin extends Plugin {
 					labels: yaml.labels,
 					datasets: datasets
 				},
-				options: {}
+				options: {
+          plugins: {
+            legend: {
+              display: yaml.legend,
+              position: yaml.legendPosition
+            }
+          },
+          layout: {
+            padding: yaml.padding
+          }
+        }
 			};
 		}
 
