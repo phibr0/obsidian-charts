@@ -272,14 +272,14 @@ The `legend` modifier sets whether or not the legend will be displayed.
 ```
 #### `legendPosition` Modifier
 Determines where the legend will be displayed. 
-- Expected `string` (`top`, `left`, `bottom`, `right`)
+- Expected `top`, `left`, `bottom`, `right`
 - Default: `top`
 
 #### Axes Modifiers
 Valid for `bar` and `line` types only. 
 ##### `indexAxis` Modifier
 Allows horizontal graphs
-- Expected: `char` (`x` or `y`)
+- Expected: `x` or `y`
 - Default: `y`
 
 ##### `stacked` Modifier
@@ -293,7 +293,8 @@ Prepend either the x or y axis to any of these to modify them.
 Can reverse the axis it is applied to 
 - Expected: `boolean` (`true` or `false`) 
 - Default: `false`
-###### Example
+
+####### Example
 ```yaml
     ```chart
         type: line
