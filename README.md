@@ -293,8 +293,6 @@ Prepend either the x or y axis to any of these to modify them.
 Can reverse the axis it is applied to 
 - Expected: `boolean` (`true` or `false`) 
 - Default: `false`
-
-####### Example
 ```yaml
     ```chart
         type: line
