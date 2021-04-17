@@ -1,6 +1,8 @@
-import typescript from '@rollup/plugin-typescript';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
+import svelte from "rollup-plugin-svelte";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import autoPreprocess from "svelte-preprocess";
+import typescript from "@rollup/plugin-typescript";
 
 const banner =
     `/*
@@ -10,18 +12,25 @@ if you want to view the source visit the plugins github repository (https://gith
 `;
 
 export default {
-    input: 'src/main.ts',
+    input: "src/main.ts",
     output: {
-        dir: '.',
-        sourcemap: 'inline',
-        format: 'cjs',
-        exports: 'default',
-        banner,
+        format: "cjs",
+        file: "main.js",
+        sourcemap: "inline",
+        exports: "default",
+        banner
     },
-    external: ['obsidian'],
+    external: ["obsidian"],
     plugins: [
+        svelte({
+            emitCss: false,
+            preprocess: autoPreprocess(),
+        }),
         typescript(),
-        nodeResolve({ browser: true }),
+        resolve({
+            browser: true,
+            dedupe: ["svelte"],
+        }),
         commonjs(),
-    ]
+    ],
 };

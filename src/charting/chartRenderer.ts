@@ -1,4 +1,4 @@
-import { borderColors, colors } from "src/constants/colorConstants";
+import { borderColors, colors } from '../constants/colorConstants';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
@@ -35,6 +35,15 @@ export function renderChart(yaml: any, el: HTMLElement) {
                         grid: { color: 'rgba(122,122,122,0.3)' },
                         beginAtZero: yaml.beginAtZero
                     },
+                },
+                plugins: {
+                    legend: {
+                        display: yaml.legend,
+                        position: yaml.legendPosition
+                    }
+                },
+                layout: {
+                    padding: yaml.padding
                 }
             }
         };
@@ -46,14 +55,42 @@ export function renderChart(yaml: any, el: HTMLElement) {
                 datasets: datasets
             },
             options: {
+                indexAxis: yaml.indexAxis,
                 scales: {
                     y: {
+                        min: yaml.yMin,
+                        max: yaml.yMax,
+                        reverse: yaml.yReverse,
+                        ticks: {
+                            display: yaml.yTickDisplay,
+                            padding: yaml.yTickPadding
+                        },
+                        display: yaml.yDisplay,
+                        stacked: yaml.stacked,
                         beginAtZero: yaml.beginAtZero,
                         grid: { color: 'rgba(122,122,122,0.3)' }
                     },
                     x: {
+                        min: yaml.xMin,
+                        max: yaml.xMax,
+                        reverse: yaml.xReverse,
+                        ticks: {
+                            display: yaml.xTickDisplay,
+                            padding: yaml.xTickPadding
+                        },
+                        display: yaml.xDisplay,
+                        stacked: yaml.stacked,
                         grid: { color: 'rgba(122,122,122,0.3)' }
                     }
+                },
+                plugins: {
+                    legend: {
+                        display: yaml.legend,
+                        position: yaml.legendPosition
+                    }
+                },
+                layout: {
+                    padding: yaml.padding
                 }
             }
         };
@@ -64,14 +101,26 @@ export function renderChart(yaml: any, el: HTMLElement) {
                 labels: yaml.labels,
                 datasets: datasets
             },
-            options: {}
+            options: {
+                plugins: {
+                    legend: {
+                        display: yaml.legend,
+                        position: yaml.legendPosition
+                    }
+                },
+                layout: {
+                    padding: yaml.padding
+                }
+            }
         };
     }
 
-    new Chart(destinationContext, chartOptions);
+    new Chart(destinationContext!, chartOptions);
 
     el.appendChild(destination);
 
-    destination.parentElement.style.width = yaml.width;
-    destination.parentElement.style.margin = "auto";
+    destination.parentElement!.style.width = yaml.width;
+    destination.parentElement!.style.margin = "auto";
+    
+    return;
 }

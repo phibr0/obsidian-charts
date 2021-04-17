@@ -32,6 +32,7 @@ export default class ChartPlugin extends Plugin {
 		}
 
 		renderChart(yaml, el);
+
 		return;
 	}
 
