@@ -1,10 +1,11 @@
-import { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import { MarkdownPostProcessorContext, MarkdownSourceView, MarkdownView, Notice, Plugin } from 'obsidian';
 import * as Yaml from 'yaml';
-import * as Chartist from 'chartist';
+
 import { renderChart } from './charting/chartRenderer';
-import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
 import { legacyRenderer } from './charting/legacyRenderer';
-import { ChartSettingTab } from './ui/settings';
+import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
+import { ChartSettingTab } from './ui/settingsTab';
+import { CreationHelperModal } from './ui/creationHelperModal';
 
 export default class ChartPlugin extends Plugin {
 
@@ -19,7 +20,7 @@ export default class ChartPlugin extends Plugin {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">" + error + "</code>";
 			return;
 		}
-		
+
 		if (!yaml || !yaml.labels || !yaml.series || !yaml.type) {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">Missing type, labels or series</code>";
 			return;
@@ -47,6 +48,20 @@ export default class ChartPlugin extends Plugin {
 
 		await this.loadSettings()
 		this.addSettingTab(new ChartSettingTab(this.app, this));
+		this.addCommand({
+			id: 'creation-helper',
+			name: 'Insert new Chart',
+			checkCallback: (checking: boolean) => {
+				let leaf = this.app.workspace.activeLeaf;
+				if (leaf.view instanceof MarkdownView) {
+					if (!checking) {
+						new CreationHelperModal(this.app, leaf.view).open();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
 		this.registerMarkdownCodeBlockProcessor('chart', ChartPlugin.postprocessor);
 	}
 
