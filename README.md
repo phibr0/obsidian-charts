@@ -249,6 +249,72 @@ The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwi
         beginAtZero: true
     ```
 ```
+#### `legend` Modifier
+The `legend` modifier sets whether or not the legend will be displayed. 
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `true`
+
+##### Example 
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [4,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,2]
+          - title: Title 3
+            data: [8,2,5,3,4]
+        legend: false
+    ```
+```
+#### `legendPosition` Modifier
+Determines where the legend will be displayed. 
+- Expected `top`, `left`, `bottom`, `right`
+- Default: `top`
+
+#### Axes Modifiers
+Valid for `bar` and `line` types only. 
+##### `indexAxis` Modifier
+Allows horizontal graphs
+- Expected: `x` or `y`
+- Default: `y`
+
+##### `stacked` Modifier
+Will change the bar and line graphs to be stacked. 
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+##### Modifiers by Axis
+Prepend either the x or y axis to any of these to modify them. 
+###### `Reverse` modifier 
+Can reverse the axis it is applied to 
+- Expected: `boolean` (`true` or `false`) 
+- Default: `false`
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [4,2,3,4,5]
+          - title: Title 2
+            data: [5,4,3,2,2]
+          - title: Title 3
+            data: [8,2,5,3,4]
+        xReverse: true
+    ```
+```
+##### `Min` and `Max` Modifiers
+Can set the min and max of the respecitve axis. `Min` will override beginAtZero. 
+- Expected: `int` 
+
+##### `Display` and `TickDisplay` Modifiers
+Determines whether the axis (`Display`) or the ticks of the axis (`TickDisplay`) are visible.
+- Expected: `boolean` (`true` or `false`)
+- Default: `true`
 
 ## Customization
 
