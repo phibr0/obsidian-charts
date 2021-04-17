@@ -86,10 +86,10 @@ fill: ${fill}
             <td class="desc"><p class="mainDesc">Width</p><p class="subDesc">Changes the horizontal width</p></td><td class="controlElement"><input type="range" min="0" max="100" class="slider" bind:value={width}></td>
           </tr>
           <tr>
-            <td class="desc"><p class="mainDesc">Fill</p><p class="subDesc">Fill the underside of the Chart</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={labelColors}></td>
+            <td class="desc"><p class="mainDesc">Fill</p><p class="subDesc">Fill the underside of the Chart</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={fill}></td>
           </tr>
           <tr>
-            <td class="desc"><p class="mainDesc">Distinct Colors</p><p class="subDesc">Use distinct Colors for each Label</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={fill}></td>
+            <td class="desc"><p class="mainDesc">Distinct Colors</p><p class="subDesc">Use distinct Colors for each Label</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={labelColors}></td>
           </tr>
         </table>
         <hr>
