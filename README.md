@@ -23,6 +23,12 @@ The `title` Property _can_ be omitted, but it is not advised to do so.
 
 > You might **not** be able to copy the Examples directly into Obsidian, the Indentation is probably wrong and Obsidian tries to convert pasted Text to Markdown, which escapes a few important characters.
 
+### Graphical Chart Creator
+
+For simple Charts you can use the graphical Chart Creator, you can access it via the Command Palette or you can even set a Hotkey!
+
+<details><summary>See it in Action!</summary><img src="https://cdn.buymeacoffee.com/uploads/project_updates/2021/04/b913e0cec14e6bad57ef0757ce29d288.gif"></details>
+
 ### Legacy Mode
 
 For anyone who has used this Plugin before the Release of v2.0.0, there is a legacy Mode so you don't need to manually convert your old Charts to the new Syntax. Just add `legacy: true` to your old Charts. **Please do not use this for new Charts, legacy Mode might get removed in future Versions.**
