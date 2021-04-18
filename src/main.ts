@@ -1,5 +1,4 @@
-import { MarkdownPostProcessorContext, MarkdownSourceView, MarkdownView, Notice, Plugin } from 'obsidian';
-import * as Yaml from 'yaml';
+import { MarkdownPostProcessorContext, MarkdownView, Plugin, parseYaml } from 'obsidian';
 
 import { renderChart } from './charting/chartRenderer';
 import { legacyRenderer } from './charting/legacyRenderer';
@@ -15,7 +14,7 @@ export default class ChartPlugin extends Plugin {
 
 		let yaml;
 		try {
-			yaml = await Yaml.parse(content);
+			yaml = await parseYaml(content);
 		} catch (error) {
 			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">" + error + "</code>";
 			return;

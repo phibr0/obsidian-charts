@@ -8,6 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "src": ["src/*"]
-    }
+    },
+    "alwaysStrict": true,
+    "noImplicitAny": true
   }
 }
