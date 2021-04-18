@@ -371,6 +371,7 @@ Right now the Colors cannot be changed, I am working on implementing Color Picke
   - [ ] Live Preview
   - [ ] Advanced Section
 - [ ] Public Interface (https://discordapp.com/channels/686053708261228577/707816848615407697/833033280395149402)
+- [ ] More customizability
 
 ## Support me
 
