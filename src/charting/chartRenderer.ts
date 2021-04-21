@@ -1,11 +1,14 @@
-import { borderColors, colors } from '../constants/colorConstants';
 import { Chart, registerables } from 'chart.js';
+import type { ChartPluginSettings } from '../constants/settingsConstants';
 Chart.register(...registerables);
 
-export function renderChart(yaml: any, el: HTMLElement) {
+export function renderChart(yaml: any, el: HTMLElement, settings: ChartPluginSettings) {
     //create the new canvas element
     const destination = document.createElement('canvas');
     const destinationContext = destination.getContext("2d");
+
+    const colors = [settings.color1, settings.color2, settings.color3, settings.color4, settings.color5, settings.color6];
+    const borderColors = [settings.borderColor1, settings.borderColor2, settings.borderColor3, settings.borderColor4, settings.borderColor5, settings.borderColor6];
 
     const datasets = [];
     for (let i = 0; yaml.series.length > i; i++) {
@@ -121,6 +124,6 @@ export function renderChart(yaml: any, el: HTMLElement) {
 
     destination.parentElement!.style.width = yaml.width;
     destination.parentElement!.style.margin = "auto";
-    
+
     return;
 }

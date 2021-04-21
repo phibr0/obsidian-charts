@@ -10,7 +10,7 @@ export default class ChartPlugin extends Plugin {
 
 	settings: ChartPluginSettings;
 
-	static postprocessor = async (content: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
+	postprocessor = async (content: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
 
 		let yaml;
 		try {
@@ -30,7 +30,7 @@ export default class ChartPlugin extends Plugin {
 			return;
 		}
 
-		renderChart(yaml, el);
+		renderChart(yaml, el, this.settings);
 
 		return;
 	}
@@ -47,7 +47,9 @@ export default class ChartPlugin extends Plugin {
 		console.log('loading plugin: Obsidian Charts');
 
 		await this.loadSettings()
+
 		this.addSettingTab(new ChartSettingTab(this.app, this));
+
 		this.addCommand({
 			id: 'creation-helper',
 			name: 'Insert new Chart',
@@ -62,7 +64,8 @@ export default class ChartPlugin extends Plugin {
 				return false;
 			}
 		});
-		this.registerMarkdownCodeBlockProcessor('chart', ChartPlugin.postprocessor);
+		
+		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
 	}
 
 	onunload() {
