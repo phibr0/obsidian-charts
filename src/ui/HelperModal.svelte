@@ -19,7 +19,7 @@
   let data: string = "";
   let chart: string ;
   let previewElement: HTMLDivElement = null;
-  const debouncedRenderChart = debounce((yaml: any, el: HTMLElement, settings: ChartPluginSettings) => renderChart(yaml, el, settings), 100, true);
+  const debouncedRenderChart = debounce((yaml: any, el: HTMLElement, settings: ChartPluginSettings) => renderChart(yaml, el, settings), 200, true);
 
   $: chart = `type: ${chartType}
 labels: [${labels}]
@@ -35,9 +35,9 @@ fill: ${fill}`;
     if(previewElement){
       try {
         debouncedRenderChart(parseYaml(chart), previewElement, settings);
-        
+        previewElement.lastElementChild?.remove();
       } catch (error) {
-        previewElement.innerHTML = "<p>Couldn't preview Chart:</p><br><code style=\"color:crimson\">" + error + "</code>";
+        previewElement.innerHTML = "<div><p>Couldn't preview Chart:</p><br><code style=\"color:crimson\">" + error + "</code></div>";
       }
     }
   }
