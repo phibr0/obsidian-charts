@@ -16,12 +16,12 @@ export default class ChartPlugin extends Plugin {
 		try {
 			yaml = await parseYaml(content);
 		} catch (error) {
-			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">" + error + "</code>";
+			el.innerHTML = "Couldn't render Chart:<br><pre><code style=\"color:crimson\">" + error + "</code></pre>";
 			return;
 		}
 
 		if (!yaml || !yaml.labels || !yaml.series || !yaml.type) {
-			el.innerHTML = "Couldn't render Chart:<br><code style=\"color:crimson\">Missing type, labels or series</code>";
+			el.innerHTML = "Couldn't render Chart:<br><pre><code style=\"color:crimson\">Missing type, labels or series</code></pre>";
 			return;
 		}
 
@@ -57,7 +57,7 @@ export default class ChartPlugin extends Plugin {
 				let leaf = this.app.workspace.activeLeaf;
 				if (leaf.view instanceof MarkdownView) {
 					if (!checking) {
-						new CreationHelperModal(this.app, leaf.view).open();
+						new CreationHelperModal(this.app, leaf.view, this.settings).open();
 					}
 					return true;
 				}

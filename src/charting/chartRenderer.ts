@@ -120,7 +120,11 @@ export function renderChart(yaml: any, el: HTMLElement, settings: ChartPluginSet
 
     new Chart(destinationContext!, chartOptions);
 
-    el.appendChild(destination);
+    if(el.firstElementChild!=null){
+        el.replaceChild(destination, el.firstElementChild);
+    } else {
+        el.appendChild(destination);
+    }
 
     destination.parentElement!.style.width = yaml.width;
     destination.parentElement!.style.margin = "auto";

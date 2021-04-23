@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting, Notice, } from "obsidian";
+import { App, PluginSettingTab,  } from "obsidian";
 import type ChartPlugin from "../main";
 
 export class ChartSettingTab extends PluginSettingTab {
