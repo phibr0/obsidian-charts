@@ -309,7 +309,11 @@ Will change the bar and line graphs to be stacked.
 
 Prepend either the x or y axis to any of these to modify them. 
 
-###### `Reverse` modifier 
+###### `Title` Modifier
+
+Use either `xTitle: "Title here"` or `yTitle: "Title here"` to add a Title to any Axis. 
+
+###### `Reverse` Modifier 
 
 Can reverse the axis it is applied to 
 
