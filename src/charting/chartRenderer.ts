@@ -71,7 +71,11 @@ export function renderChart(yaml: any, el: HTMLElement, settings: ChartPluginSet
                         display: yaml.yDisplay,
                         stacked: yaml.stacked,
                         beginAtZero: yaml.beginAtZero,
-                        grid: { color: 'rgba(122,122,122,0.3)' }
+                        grid: { color: 'rgba(122,122,122,0.3)' },
+                        title: {
+                            display: yaml.yTitle,
+                            text: yaml.yTitle
+                        }
                     },
                     x: {
                         min: yaml.xMin,
@@ -83,7 +87,11 @@ export function renderChart(yaml: any, el: HTMLElement, settings: ChartPluginSet
                         },
                         display: yaml.xDisplay,
                         stacked: yaml.stacked,
-                        grid: { color: 'rgba(122,122,122,0.3)' }
+                        grid: { color: 'rgba(122,122,122,0.3)' },
+                        title: {
+                            display: yaml.xTitle,
+                            text: yaml.xTitle
+                        }
                     }
                 },
                 plugins: {
