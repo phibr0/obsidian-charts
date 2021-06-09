@@ -1,7 +1,7 @@
 {
     "id": "obsidian-charts",
     "name": "Obsidian Charts",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "minAppVersion": "0.11.9",
     "description": "This Plugin lets you create Charts within Obsidian",
     "author": "phibr0",
