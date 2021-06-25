@@ -1,10 +1,11 @@
-import { MarkdownPostProcessorContext, MarkdownView, Plugin, parseYaml } from 'obsidian';
+import { MarkdownPostProcessorContext, MarkdownView, Plugin, parseYaml, Menu, Editor } from 'obsidian';
 
 import { renderChart } from './charting/chartRenderer';
 import { legacyRenderer } from './charting/legacyRenderer';
 import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
 import { ChartSettingTab } from './ui/settingsTab';
 import { CreationHelperModal } from './ui/creationHelperModal';
+import { addIcons } from 'src/ui/icons';
 
 export default class ChartPlugin extends Plugin {
 
@@ -48,6 +49,8 @@ export default class ChartPlugin extends Plugin {
 
 		await this.loadSettings()
 
+		addIcons();
+
 		this.addSettingTab(new ChartSettingTab(this.app, this));
 
 		this.addCommand({
@@ -64,8 +67,24 @@ export default class ChartPlugin extends Plugin {
 				return false;
 			}
 		});
-		
+
 		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
+
+		// Remove this ignore when the obsidian package is updated on npm
+		// Editor mode
+		// @ts-ignore
+		this.registerEvent(this.app.workspace.on('editor-menu',
+			(menu: Menu, editor: Editor, view: MarkdownView) => {
+				if (view) {
+					menu.addItem((item) => {
+						item.setTitle("Insert Chart")
+							.setIcon("chart")
+							.onClick((_) => {
+								new CreationHelperModal(this.app, view, this.settings).open();
+							});
+					});
+				}
+			}));
 	}
 
 	onunload() {

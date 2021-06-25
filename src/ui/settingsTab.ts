@@ -198,11 +198,11 @@ export class ChartSettingTab extends PluginSettingTab {
 				})
 			});
 
-			new Setting(containerEl)
-            .setName('Donate')
-            .setDesc('If you like this Plugin, consider donating to support continued development:')
-            .addButton((bt) => {
-                bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
-            })
+		new Setting(containerEl)
+			.setName('Donate')
+			.setDesc('If you like this Plugin, consider donating to support continued development:')
+			.addButton((bt) => {
+				bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
+			})
 	}
 }
