@@ -14,6 +14,7 @@
   let width: number = 80;
   let fill: boolean = false;
   let labelColors: boolean = false;
+  let startAtZero: boolean = false;
   let labels: string = "";
   let dataTitle: string = "";
   let data: string = "";
@@ -29,7 +30,8 @@ series:
 tension: ${tension/100}
 width: ${width}%
 labelColors: ${labelColors}
-fill: ${fill}`;
+fill: ${fill}
+beginAtZero: ${startAtZero}`;
 
   $: {
     if(previewElement){
@@ -111,6 +113,9 @@ fill: ${fill}`;
           </tr>
           <tr>
             <td class="desc"><p class="mainDesc">Distinct Colors</p><p class="subDesc">Use distinct Colors for each Label</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={labelColors}></td>
+          </tr>
+          <tr>
+            <td class="desc"><p class="mainDesc">Start at Zero</p><p class="subDesc">Don't cut the graph at the bottom</p></td><td class="controlElement"><input type=checkbox class="task-list-item-checkbox" style="width: 16px; height: 16px" bind:checked={startAtZero}></td>
           </tr>
         </table>
         <hr>
