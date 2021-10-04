@@ -36,7 +36,8 @@ export function renderChart(yaml: any, el: HTMLElement, settings: ChartPluginSet
                 scales: {
                     r: {
                         grid: { color: 'rgba(122,122,122,0.3)' },
-                        beginAtZero: yaml.beginAtZero
+                        beginAtZero: yaml.beginAtZero,
+                        max: yaml.rMax
                     },
                 },
                 plugins: {
