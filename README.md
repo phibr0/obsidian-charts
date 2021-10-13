@@ -29,6 +29,15 @@ For simple Charts you can use the graphical Chart Creator, you can access it via
 
 <details><summary>See it in Action!</summary><img src="https://cdn.buymeacoffee.com/uploads/project_updates/2021/04/b913e0cec14e6bad57ef0757ce29d288.gif"></details>
 
+### Chart from Table
+
+You can select a whole Markdown-Table and run the Command "Create Chart from Table" to replace it with a Chart.
+
+<details>
+<summary>See how it works</summary>
+</img src="https://media.discordapp.net/attachments/855181471643861002/897811518022909982/tabletochart.gif">
+</details>
+
 ### Chart Types
 
 This Plugin provides 6 different Variants. The type of a Chart is set by the `type: {Type}` Property.
@@ -349,7 +358,7 @@ Determines whether the axis (`Display`) or the ticks of the axis (`TickDisplay`)
 
 ### Changing Colors
 
-Right now the Colors cannot be changed, I am working on implementing Color Pickers for a Settings Tab, so the Colors can be customized again.
+You can add and edit Colors in the Settings of this Plugin.
 
 ### Interactivity
 
@@ -369,6 +378,15 @@ window.renderChart(data, element);
 The data is the standard [Chart.js](https://www.chartjs.org/docs/latest/) data payload, you can use everything it supports in there.
 
 **Please note, that you have to use dataviewjs for this!**
+
+## Convert Charts to Images
+
+Select the whole Chart Codeblock and run the Command "Create image from Chart" to replace it with a Image. You can choose the Quality and Format in the Settings of this Plugin.
+
+<details>
+<summary>See how it works</summary>
+</img src="https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif">
+</details>
 
 ## How to install
 
