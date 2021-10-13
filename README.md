@@ -334,6 +334,7 @@ Can reverse the axis it is applied to
 ##### `Min` and `Max` Modifiers
 
 Can set the min and max of the respecitve axis. `Min` will override beginAtZero. 
+Use `rMax` to set the max for radar and polar area charts.
 
 - Expected: `int` 
 
