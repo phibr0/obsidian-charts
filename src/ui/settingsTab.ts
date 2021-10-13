@@ -134,7 +134,7 @@ export class ChartSettingTab extends PluginSettingTab {
 
 		const detailEl = containerEl.createEl("details");
 		detailEl.createEl("summary", { text: "How to use" });
-		detailEl.createEl("img", {attr: {src: "https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/barchart.png"}});
+		detailEl.createEl("img", {attr: {src: "https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif"}});
 
 		new Setting(containerEl)
 			.setName("Image Format")
