@@ -375,6 +375,37 @@ If you want to use this Plugin in combination with Plugins like Dataview, I reco
 window.renderChart(data, element);
 ```
 
+This is a full Example:
+
+```md
+test:: First Test
+mark:: 6
+
+\```dataviewjs
+const data = dv.current()
+
+const chartData = {
+    type: 'bar',
+    data: {
+        labels: [data.test],
+        datasets: [{
+            label: 'Grades',
+            data: [data.mark],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+}
+
+window.renderChart(chartData, this.container);
+\```
+```
+
 The data is the standard [Chart.js](https://www.chartjs.org/docs/latest/) data payload, you can use everything it supports in there.
 
 **Please note, that you have to use dataviewjs for this!**
@@ -394,15 +425,6 @@ Select the whole Chart Codeblock and run the Command "Create image from Chart" t
 2. Click on **Browse** and search for "Obsidian Charts"
 3. Click install
 4. Toggle the Plugin on in the **Community Plugins** Tab
-
-## Roadmap
-
-- [ ] Create a Chart from Table
-- [ ] Creation Helper improvements
-  - [ ] Live Preview
-  - [ ] Advanced Section
-- [ ] Public Interface (https://discordapp.com/channels/686053708261228577/707816848615407697/833033280395149402)
-- [ ] More customizability
 
 ## Support me
 
