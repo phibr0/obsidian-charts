@@ -35,7 +35,7 @@ You can select a whole Markdown-Table and run the Command "Create Chart from Tab
 
 <details>
 <summary>See how it works</summary>
-</img src="https://media.discordapp.net/attachments/855181471643861002/897811518022909982/tabletochart.gif">
+<img src="https://media.discordapp.net/attachments/855181471643861002/897811518022909982/tabletochart.gif" referrerpolicy="no-referrer">
 </details>
 
 ### Chart Types
@@ -385,7 +385,7 @@ Select the whole Chart Codeblock and run the Command "Create image from Chart" t
 
 <details>
 <summary>See how it works</summary>
-</img src="https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif">
+<img src="https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif" referrerpolicy="no-referrer">
 </details>
 
 ## How to install
