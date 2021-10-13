@@ -1,5 +1,21 @@
-import { App, PluginSettingTab, Setting, } from "obsidian";
+import { DEFAULT_SETTINGS, ImageOptions } from './../constants/settingsConstants';
+import { App, MarkdownRenderer, Modal, Notice, PluginSettingTab, request, Setting, } from "obsidian";
 import type ChartPlugin from "../main";
+import Picker from 'vanilla-picker';
+
+class DocumentationModal extends Modal {
+	async onOpen() {
+		const el = this.contentEl;
+
+		const markdown = await request({ url: "https://raw.githubusercontent.com/phibr0/obsidian-charts/master/README.md" });
+		await MarkdownRenderer.renderMarkdown(
+			markdown.substring(markdown.indexOf("## Usage"), markdown.indexOf("## How to install")),
+			el,
+			null,
+			null
+		);
+	}
+}
 
 export class ChartSettingTab extends PluginSettingTab {
 	plugin: ChartPlugin;
@@ -21,188 +37,131 @@ export class ChartSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		containerEl.createEl('h2', { text: 'Settings - Obsidian Charts' });
-		containerEl.innerHTML += "<h4>Read the <a href=\"https://github.com/phibr0/obsidian-charts/blob/master/README.md\">Documentation</a></h4>";
 
-		const desc1 = document.createDocumentFragment();
-		desc1.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc1.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
-
-		const desc2 = document.createDocumentFragment();
-		desc2.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc2.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
-
-		const desc3 = document.createDocumentFragment();
-		desc3.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc3.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
-
-		const desc4 = document.createDocumentFragment();
-		desc4.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc4.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
-
-		const desc5 = document.createDocumentFragment();
-		desc5.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc5.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
-
-		const desc6 = document.createDocumentFragment();
-		desc6.append(
-			"Set the Colors for your Charts. By default the inner Color ist the same as the outer one, but with less opacity. ",
-			"You can use any ",
-			desc6.createEl("a", {
-				href: "https://www.w3schools.com/cssref/css_colors.asp",
-				text: "valid CSS Color."
-			}),
-		)
+		containerEl.createEl('h3', { text: "General" });
 
 		new Setting(containerEl)
-			.setName("Set Color 1")
-			.setDesc(desc1)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color1)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color1 = value;
-					await plugin.saveSettings();
-				})
+			.setName("Read the Documentation")
+			.setDesc("Find out how to create all these beautiful Charts")
+			.addButton(cb => {
+				cb.setButtonText("Read")
+					.onClick(() => new DocumentationModal(this.app).open());
 			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor1)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor1 = value;
-					await plugin.saveSettings();
-				})
-			});
-		new Setting(containerEl)
-			.setName("Set Color 2")
-			.setDesc(desc2)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color2)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color2 = value;
-					await plugin.saveSettings();
-				})
-			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor2)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor2 = value;
-					await plugin.saveSettings();
-				})
-			});
-		new Setting(containerEl)
-			.setName("Set Color 3")
-			.setDesc(desc3)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color3)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color3 = value;
-					await plugin.saveSettings();
-				})
-			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor3)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor3 = value;
-					await plugin.saveSettings();
-				})
-			});
-		new Setting(containerEl)
-			.setName("Set Color 4")
-			.setDesc(desc4)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color4)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color4 = value;
-					await plugin.saveSettings();
-				})
-			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor4)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor4 = value;
-					await plugin.saveSettings();
-				})
-			});
-		new Setting(containerEl)
-			.setName("Set Color 5")
-			.setDesc(desc5)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color5)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color5 = value;
-					await plugin.saveSettings();
-				})
-			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor5)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor5 = value;
-					await plugin.saveSettings();
-				})
-			});
-		new Setting(containerEl)
-			.setName("Set Color 6")
-			.setDesc(desc6)
-			.addText((cb) => {
-				cb.setValue(plugin.settings.color6)
-				cb.setPlaceholder("Inner Color")
-				cb.onChange(async (value) => {
-					plugin.settings.color6 = value;
-					await plugin.saveSettings();
-				})
-			})
-			.addText((cb) => {
-				cb.setValue(plugin.settings.borderColor6)
-				cb.setPlaceholder("Border Color")
-				cb.onChange(async (value) => {
-					plugin.settings.borderColor6 = value;
-					await plugin.saveSettings();
-				})
-			});
 
+		new Setting(containerEl)
+			.setName("Show Button in Context Menu")
+			.setDesc("If enabled, you will se a Button in your Editor Context Menu to open the Chart Creator.")
+			.addToggle(cb => {
+				cb
+					.setValue(this.plugin.settings.contextMenu)
+					.onChange(async value => {
+						plugin.settings.contextMenu = value;
+						await plugin.saveSettings();
+					})
+			});
 		new Setting(containerEl)
 			.setName('Donate')
 			.setDesc('If you like this Plugin, consider donating to support continued development:')
 			.addButton((bt) => {
 				bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
-			})
+			});
+
+		containerEl.createEl('h3', {
+			text: "Colors", attr: {
+				style: "margin-bottom: 0"
+			}
+		});
+		const desc = containerEl.createEl("p", { cls: "setting-item-description" });
+		desc.append(
+			"Set the Colors for your Charts. This will set the border Color and the inner Color will be the same, but with less opacity. This ensures better compatibility with Dark and Light Mode. ",
+			"You can use any ",
+			desc.createEl("a", {
+				href: "https://www.w3schools.com/cssref/css_colors.asp",
+				text: "valid CSS Color."
+			}),
+		)
+
+		plugin.settings.colors.forEach((color, idx) => {
+			const nameEl = document.createDocumentFragment();
+			nameEl.createSpan({ text: "●", attr: { style: `color: ${color}` } });
+			nameEl.appendText(` Color #${idx + 1}`);
+			new Setting(containerEl)
+				.setName(nameEl)
+				.setDesc('This will be the border Color used in the Charts you create.')
+				.addButton(btn => {
+					btn.setButtonText("Change Color");
+					new Picker({
+						parent: btn.buttonEl,
+						onDone: async (color) => {
+							this.plugin.settings.colors[idx] = color.hex;
+							await this.plugin.saveSettings();
+							this.display();
+						},
+						popup: "left",
+						color: color,
+						alpha: false,
+					});
+				})
+				.addExtraButton(btn => {
+					btn.setIcon("trash").setTooltip("Remove").onClick(async () => {
+						this.plugin.settings.colors.remove(color);
+						await this.plugin.saveSettings();
+						this.display();
+					});
+					if (this.plugin.settings.colors.length === 1) {
+						btn.setDisabled(true);
+					}
+				})
+				.addExtraButton(btn => {
+					btn.setIcon("reset").setTooltip("Reset to default").onClick(async () => {
+						this.plugin.settings.colors[idx] = DEFAULT_SETTINGS.colors[idx] ?? "#ffffff";
+						await this.plugin.saveSettings();
+						this.display();
+					});
+				});
+		});
+
+		new Setting(containerEl)
+			.addButton(btn => {
+				btn.setButtonText("Add Color").onClick(async () => {
+					this.plugin.settings.colors.push("#ffffff");
+					await this.plugin.saveSettings();
+					this.display();
+				})
+			});
+
+		containerEl.createEl('h3', { text: "Chart to Image Converter" });
+
+		const detailEl = containerEl.createEl("details");
+		detailEl.createEl("summary", { text: "How to use" });
+		detailEl.createEl("img", {attr: {src: "https://raw.githubusercontent.com/phibr0/obsidian-charts/master/images/barchart.png"}});
+
+		new Setting(containerEl)
+			.setName("Image Format")
+			.setDesc("The Format to be used, when generating a Image from a Chart.")
+			.addDropdown(cb => {
+				cb.addOptions({
+					'image/jpeg': 'jpeg',
+					'image/png': 'png',
+					'image/webp': 'webp',
+				});
+				cb.setValue(plugin.settings.imageSettings.format);
+				cb.onChange(async value => {
+					(plugin.settings.imageSettings.format as any) = value;
+					await plugin.saveSettings();
+				});
+			});
+		new Setting(containerEl)
+			.setName("Image Quality")
+			.setDesc("If using a lossy format, set the Image Quality.")
+			.addSlider(cb => {
+				cb.setDynamicTooltip()
+					.setLimits(0.01, 1, 0.01)
+					.setValue(plugin.settings.imageSettings.quality)
+					.onChange(async value => {
+						plugin.settings.imageSettings.quality = value;
+						await plugin.saveSettings();
+					});
+			});
 	}
 }

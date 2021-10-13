@@ -1,39 +1,34 @@
-import { MarkdownPostProcessorContext, MarkdownView, Plugin, parseYaml, Menu, Editor } from 'obsidian';
+import { MarkdownView, Plugin, parseYaml, Menu, Editor, View, Notice } from 'obsidian';
 
-import { renderChart } from './charting/chartRenderer';
-import { legacyRenderer } from './charting/legacyRenderer';
+import Renderer from './chartRenderer';
 import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
 import { ChartSettingTab } from './ui/settingsTab';
 import { CreationHelperModal } from './ui/creationHelperModal';
 import { addIcons } from 'src/ui/icons';
+import { chartFromTable } from 'src/chartFromTable';
+import { base64ToArrayBuffer, renderError, saveImageToVaultAndPaste } from 'src/util';
 
 export default class ChartPlugin extends Plugin {
 
 	settings: ChartPluginSettings;
+	renderer: Renderer;
 
-	postprocessor = async (content: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
+	postprocessor = async (content: string, el: HTMLElement) => {
 
-		let yaml;
+		let data;
 		try {
-			yaml = await parseYaml(content);
+			data = await parseYaml(content);
 		} catch (error) {
-			el.innerHTML = "Couldn't render Chart:<br><pre><code style=\"color:crimson\">" + error + "</code></pre>";
+			renderError(error, el);
 			return;
 		}
 
-		if (!yaml || !yaml.labels || !yaml.series || !yaml.type) {
-			el.innerHTML = "Couldn't render Chart:<br><pre><code style=\"color:crimson\">Missing type, labels or series</code></pre>";
+		if (!data || !data.labels || !data.series || !data.type) {
+			renderError("Missing type, labels or series", el)
 			return;
 		}
 
-		if (yaml.legacy == true) {
-			legacyRenderer(yaml, el);
-			return;
-		}
-
-		renderChart(yaml, el, this.settings);
-
-		return;
+		this.renderer.renderFromYaml(data, el);
 	}
 
 	async loadSettings() {
@@ -51,6 +46,11 @@ export default class ChartPlugin extends Plugin {
 
 		addIcons();
 
+		this.renderer = new Renderer(this.settings);
+
+		//@ts-ignore
+		window.renderChart = this.renderer.renderRaw;
+
 		this.addSettingTab(new ChartSettingTab(this.app, this));
 
 		this.addCommand({
@@ -60,7 +60,50 @@ export default class ChartPlugin extends Plugin {
 				let leaf = this.app.workspace.activeLeaf;
 				if (leaf.view instanceof MarkdownView) {
 					if (!checking) {
-						new CreationHelperModal(this.app, leaf.view, this.settings).open();
+						new CreationHelperModal(this.app, leaf.view, this.settings, this.renderer).open();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+
+		this.addCommand({
+			id: 'chart-from-table-column',
+			name: 'Create Chart from Table (Column oriented Layout)',
+			editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
+				if (view instanceof MarkdownView && editor.getSelection().split('\n').length >= 3 && editor.getSelection().split('|').length >= 2) {
+					if (!checking) {
+						chartFromTable(editor, 'columns');
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+
+		this.addCommand({
+			id: 'chart-from-table-row',
+			name: 'Create Chart from Table (Row oriented Layout)',
+			editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
+				if (view instanceof MarkdownView && editor.getSelection().split('\n').length >= 3 && editor.getSelection().split('|').length >= 2) {
+					if (!checking) {
+						chartFromTable(editor, 'rows');
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+
+		this.addCommand({
+			id: 'chart-to-svg',
+			name: 'Create Image from Chart',
+			editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
+				if (view instanceof MarkdownView && editor.getSelection().startsWith("```chart") && editor.getSelection().endsWith("```")) {
+					if (!checking) {
+						new Notice("Rendering Chart...")
+						saveImageToVaultAndPaste(editor, this.app, this.renderer, view.file, this.settings);
 					}
 					return true;
 				}
@@ -69,18 +112,19 @@ export default class ChartPlugin extends Plugin {
 		});
 
 		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
+		this.registerMarkdownCodeBlockProcessor('advanced-chart', (data, el) => this.renderer.renderRaw(JSON.parse(data), el));
 
 		// Remove this ignore when the obsidian package is updated on npm
 		// Editor mode
 		// @ts-ignore
 		this.registerEvent(this.app.workspace.on('editor-menu',
-			(menu: Menu, editor: Editor, view: MarkdownView) => {
-				if (view) {
+			(menu: Menu, _: Editor, view: MarkdownView) => {
+				if (view && this.settings.contextMenu) {
 					menu.addItem((item) => {
 						item.setTitle("Insert Chart")
 							.setIcon("chart")
 							.onClick((_) => {
-								new CreationHelperModal(this.app, view, this.settings).open();
+								new CreationHelperModal(this.app, view, this.settings, this.renderer).open();
 							});
 					});
 				}
