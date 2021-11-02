@@ -1,5 +1,5 @@
 import { Chart, registerables } from 'chart.js';
-import { parseYaml } from 'obsidian';
+import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
 import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
 Chart.register(...registerables);
@@ -135,7 +135,6 @@ export default class Renderer {
     }
 
     /**
-     * 
      * @param yaml the copied codeblock
      * @returns base64 encoded image in png format
      */
@@ -155,21 +154,42 @@ export default class Renderer {
         return dataurl.substring(dataurl.indexOf(',') + 1);
     }
 
-    renderRaw(data: any, el: HTMLElement) {
-        const destination = document.createElement('canvas');
-        const destinationContext = destination.getContext("2d");
+    renderRaw(data: any, el: HTMLElement): Chart | null {
+        const destination = el.createEl('canvas');
 
         try {
-            new Chart(destinationContext, data);
-            el.appendChild(destination);
+            let chart = new Chart(destination.getContext("2d"), data);
             destination.parentElement.style.width = data.width ?? "100%";
             destination.parentElement.style.margin = "auto";
+            return chart;
         } catch (error) {
             renderError(error, el);
+            return null;
         }
     }
 
-    renderFromYaml(yaml: any, el: HTMLElement) {
-        this.renderRaw(this.datasetPrep(yaml), el);
+    renderFromYaml(yaml: any, el: HTMLElement, ctx: MarkdownPostProcessorContext) {
+        ctx.addChild(new ChartRenderChild(this.datasetPrep(yaml), el, this));
+    }
+}
+
+class ChartRenderChild extends MarkdownRenderChild {
+    data: any;
+    chart: null | Chart;
+    renderer: Renderer;
+
+    constructor(data: any, el: HTMLElement, renderer: Renderer) {
+        super(el);
+        this.data = data;
+        this.renderer = renderer;
+    }
+
+    onload() {
+        this.chart = this.renderer.renderRaw(this.data, this.containerEl);
+    }
+
+    onunload() {
+        this.chart && this.chart.destroy();
+        this.chart = null;
     }
 }

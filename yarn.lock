@@ -56,10 +56,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@tsconfig/svelte@^1.0.10":
-  version "1.0.13"
-  resolved "https://registry.npmjs.org/@tsconfig/svelte/-/svelte-1.0.13.tgz"
-  integrity sha512-5lYJP45Xllo4yE/RUBccBT32eBlRDbqN8r1/MIvQbKxW3aFqaYPCNgm8D5V20X4ShHcwvYWNlKg3liDh1MlBoA==
+"@tsconfig/svelte@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-2.0.1.tgz#0e8d7caa693e9b2afce5e622c0475bb0fd89c12c"
+  integrity sha512-aqkICXbM1oX5FfgZd2qSSAGdyo/NRxjWCamxoyi3T8iVQnzGge19HhDYzZ6NrVOW7bhcWNSq9XexWFtMzbB24A==
 
 "@types/chroma-js@^2.1.3":
   version "2.1.3"
@@ -173,11 +173,6 @@ callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/callsites/-/callsites-3.1.0.tgz"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
-
-canvas2svg@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/canvas2svg/-/canvas2svg-1.0.16.tgz"
-  integrity sha1-CBTFO7q3w0Buc4cnnN8lf+T28r0=
 
 chalk@^4.0.0:
   version "4.1.2"

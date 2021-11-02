@@ -1,4 +1,4 @@
-import { MarkdownView, Plugin, parseYaml, Menu, Editor, View, Notice } from 'obsidian';
+import { MarkdownView, Plugin, parseYaml, Menu, Editor, View, Notice, MarkdownPostProcessorContext } from 'obsidian';
 
 import Renderer from './chartRenderer';
 import { ChartPluginSettings, DEFAULT_SETTINGS } from './constants/settingsConstants';
@@ -13,7 +13,7 @@ export default class ChartPlugin extends Plugin {
 	settings: ChartPluginSettings;
 	renderer: Renderer;
 
-	postprocessor = async (content: string, el: HTMLElement) => {
+	postprocessor = async (content: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
 
 		let data;
 		try {
@@ -28,7 +28,7 @@ export default class ChartPlugin extends Plugin {
 			return;
 		}
 
-		this.renderer.renderFromYaml(data, el);
+		this.renderer.renderFromYaml(data, el, ctx);
 	}
 
 	async loadSettings() {
@@ -72,7 +72,8 @@ export default class ChartPlugin extends Plugin {
 			id: 'chart-from-table-column',
 			name: 'Create Chart from Table (Column oriented Layout)',
 			editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
-				if (view instanceof MarkdownView && editor.getSelection().split('\n').length >= 3 && editor.getSelection().split('|').length >= 2) {
+				let selection = editor.getSelection();
+				if (view instanceof MarkdownView && selection.split('\n').length >= 3 && selection.split('|').length >= 2) {
 					if (!checking) {
 						chartFromTable(editor, 'columns');
 					}
@@ -112,7 +113,7 @@ export default class ChartPlugin extends Plugin {
 		});
 
 		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
-		this.registerMarkdownCodeBlockProcessor('advanced-chart', (data, el) => this.renderer.renderRaw(JSON.parse(data), el));
+		this.registerMarkdownCodeBlockProcessor('advanced-chart', async (data, el) => this.renderer.renderRaw(await JSON.parse(data), el));
 
 		// Remove this ignore when the obsidian package is updated on npm
 		// Editor mode

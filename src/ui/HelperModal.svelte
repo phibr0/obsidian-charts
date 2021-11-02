@@ -4,6 +4,7 @@
   import { createEventDispatcher } from "svelte";
   import { renderError } from "src/util";
   import type { DataField } from "src/constants/settingsConstants";
+import type { Chart } from "chart.js";
 
   export let editor: Editor;
   export let renderer: Renderer;
@@ -11,6 +12,7 @@
   const dispatch = createEventDispatcher();
 
   let chartType: string = "bar";
+  let lastChart: Chart = null;
   let tension: number = 20;
   let width: number = 80;
   let fill: boolean = false;
@@ -22,8 +24,9 @@
   let previewElement: HTMLDivElement = null;
   const debouncedRenderChart = debounce(
     (yaml: any, el: HTMLElement) => {
+      if(lastChart) lastChart.destroy();
       previewElement.lastElementChild?.remove();
-      renderer.renderFromYaml(yaml, el);
+      lastChart = renderer.renderRaw(renderer.datasetPrep(parseYaml(yaml)), el);
     },
     500,
     true
@@ -44,7 +47,7 @@ beginAtZero: ${startAtZero}`;
   $: {
     if (previewElement) {
       try {
-        debouncedRenderChart(parseYaml(chart), previewElement);
+        debouncedRenderChart(chart, previewElement);
       } catch (error) {
         renderError(error, previewElement);
       }
@@ -54,6 +57,7 @@ beginAtZero: ${startAtZero}`;
   function insertChart() {
     let doc = editor.getDoc();
     let cursor = doc.getCursor();
+    lastChart.destroy();
 
     doc.replaceRange("```chart\n" + chart + "\n```", cursor);
     dispatch("close");

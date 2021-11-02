@@ -3,7 +3,6 @@ import { Extractor } from "markdown-tables-to-json";
 import type { DataField } from 'src/constants/settingsConstants';
 
 export async function chartFromTable(editor: Editor, layout: 'columns' | 'rows') {
-    console.log(editor.getCursor())
     let fields: any;
     try {
         fields = Extractor.extractObject(editor.getSelection(), layout, false);
