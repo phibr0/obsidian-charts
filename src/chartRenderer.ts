@@ -1,4 +1,4 @@
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
 import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
@@ -11,7 +11,7 @@ export default class Renderer {
         this.settings = settings;
     }
 
-    datasetPrep(yaml: any) {
+    datasetPrep(yaml: any): {chartOptions: ChartConfiguration, width: string} {
         const datasets = [];
         for (let i = 0; yaml.series.length > i; i++) {
             datasets.push({
@@ -127,11 +127,7 @@ export default class Renderer {
                 }
             };
         }
-        return chartOptions;
-    }
-
-    delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return {chartOptions, width: yaml.width};
     }
 
     /**
@@ -139,15 +135,16 @@ export default class Renderer {
      * @returns base64 encoded image in png format
      */
     async imageRenderer(yaml: string, options: ImageOptions): Promise<string> {
+        const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
         const destination = document.createElement('canvas');
         const destinationContext = destination.getContext("2d");
 
         const chartOptions = this.datasetPrep(await parseYaml(yaml.replace("```chart", "").replace("```", "").replace(/\t/g, '    ')));
 
-        new Chart(destinationContext, chartOptions);
+        new Chart(destinationContext, chartOptions.chartOptions);
 
         document.body.append(destination);
-        await this.delay(250);
+        await delay(250);
         const dataurl = destination.toDataURL(options.format, options.quality);
         document.body.removeChild(destination);
 
@@ -158,7 +155,7 @@ export default class Renderer {
         const destination = el.createEl('canvas');
 
         try {
-            let chart = new Chart(destination.getContext("2d"), data);
+            let chart = new Chart(destination.getContext("2d"), data.chartOptions);
             destination.parentElement.style.width = data.width ?? "100%";
             destination.parentElement.style.margin = "auto";
             return chart;
