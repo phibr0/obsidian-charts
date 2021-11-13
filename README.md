@@ -213,6 +213,30 @@ The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
     ```
 ```
 
+#### `spanGaps` Modifier
+
+The `spanGaps` Modifier is used to fill in missing Datapoints.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+##### Example
+
+```yaml
+    ```chart
+        type: line
+        labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+        series:
+          - title: Title 1
+            data: [1,2,null,4,5]
+          - title: Title 2
+            data: [5,null,null,null,1]
+          - title: Title 3
+            data: [8,2,5,-1,4]
+        spanGaps: true
+    ```
+```
+
 #### `tension` Modifier
 
 The `tension` Modifier is used in Line Charts to set the tension of the Traces to the given points. A Value of 0 means no smoothness at all, a value of 1 is maximum smoothness.

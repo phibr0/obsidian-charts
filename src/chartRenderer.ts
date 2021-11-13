@@ -35,6 +35,7 @@ export default class Renderer {
                     datasets: datasets
                 },
                 options: {
+                    spanGaps: yaml.spanGaps,
                     scales: {
                         r: {
                             grid: { color: 'rgba(122,122,122,0.3)' },
@@ -61,6 +62,7 @@ export default class Renderer {
                 },
                 options: {
                     indexAxis: yaml.indexAxis,
+                    spanGaps: yaml.spanGaps,
                     scales: {
                         y: {
                             min: yaml.yMin,
@@ -115,6 +117,7 @@ export default class Renderer {
                     datasets: datasets
                 },
                 options: {
+                    spanGaps: yaml.spanGaps,
                     plugins: {
                         legend: {
                             display: yaml.legend,
