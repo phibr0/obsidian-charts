@@ -1,4 +1,5 @@
-import { Chart, ChartConfiguration, ChartOptions, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import 'chartjs-adapter-moment';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
 import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
@@ -11,7 +12,7 @@ export default class Renderer {
         this.settings = settings;
     }
 
-    datasetPrep(yaml: any): {chartOptions: ChartConfiguration, width: string} {
+    datasetPrep(yaml: any): { chartOptions: ChartConfiguration, width: string } {
         const datasets = [];
         for (let i = 0; yaml.series.length > i; i++) {
             datasets.push({
@@ -130,7 +131,7 @@ export default class Renderer {
                 }
             };
         }
-        return {chartOptions, width: yaml.width};
+        return { chartOptions, width: yaml.width };
     }
 
     /**
@@ -157,14 +158,24 @@ export default class Renderer {
     renderRaw(data: any, el: HTMLElement): Chart | null {
         const destination = el.createEl('canvas');
 
-        try {
-            let chart = new Chart(destination.getContext("2d"), data.chartOptions);
-            destination.parentElement.style.width = data.width ?? "100%";
-            destination.parentElement.style.margin = "auto";
-            return chart;
-        } catch (error) {
-            renderError(error, el);
-            return null;
+        if (data.chartOptions) {
+            try {
+                let chart = new Chart(destination.getContext("2d"), data.chartOptions);
+                destination.parentElement.style.width = data.width ?? "100%";
+                destination.parentElement.style.margin = "auto";
+                return chart;
+            } catch (error) {
+                renderError(error, el);
+                return null;
+            }
+        } else {
+            try {
+                let chart = new Chart(destination.getContext("2d"), data);
+                return chart;
+            } catch (error) {
+                renderError(error, el);
+                return null;
+            }
         }
     }
 

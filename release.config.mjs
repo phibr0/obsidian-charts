@@ -16,7 +16,7 @@ esbuild.build({
     },
     entryPoints: ['src/main.ts'],
     bundle: true,
-    external: ['obsidian'],
+    external: ['obsidian', 'moment'],
     format: 'cjs',
     minify: true,
     watch: false,
