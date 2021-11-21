@@ -10,3 +10,5 @@ package-lock.json
 main.js
 *.js.map
 src/settings.ts
+
+data.json

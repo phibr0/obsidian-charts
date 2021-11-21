@@ -1,5 +1,5 @@
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import 'chartjs-adapter-moment';
+import './date-adapter/chartjs-adapter-moment.esm.js';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
 import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
