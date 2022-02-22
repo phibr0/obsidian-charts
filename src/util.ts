@@ -4,7 +4,7 @@ import type { ChartPluginSettings } from "src/constants/settingsConstants";
 import type Renderer from "src/chartRenderer";
 
 export function generateInnerColors(colors: string[]) {
-    return colors.map((color: string) => chroma(color).alpha(0.25).hex());
+    return colors.map((color: string) => chroma(color.trim()).alpha(0.25).hex());
 }
 
 export function renderError(error: any, el: HTMLElement) {

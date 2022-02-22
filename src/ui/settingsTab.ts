@@ -81,60 +81,70 @@ export class ChartSettingTab extends PluginSettingTab {
 			}),
 		)
 
-		plugin.settings.colors.forEach((color, idx) => {
-			const nameEl = document.createDocumentFragment();
-			nameEl.createSpan({ text: "●", attr: { style: `color: ${color}` } });
-			nameEl.appendText(` Color #${idx + 1}`);
-			new Setting(containerEl)
-				.setName(nameEl)
-				.setDesc('This will be the border Color used in the Charts you create.')
-				.addButton(btn => {
-					btn.setButtonText("Change Color");
-					new Picker({
-						parent: btn.buttonEl,
-						onDone: async (color) => {
-							this.plugin.settings.colors[idx] = color.hex;
+		new Setting(containerEl).setName('Enable Theme Colors').setDesc('If your Obsidian Theme (or snippet) provides Colors you can use them instead.').addToggle(cb => {
+			cb.setValue(plugin.settings.themeable).onChange(async value => {
+				plugin.settings.themeable = value;
+				await plugin.saveSettings();
+				this.display();
+			})
+		})
+
+		if (!plugin.settings.themeable) {
+			plugin.settings.colors.forEach((color, idx) => {
+				const nameEl = document.createDocumentFragment();
+				nameEl.createSpan({ text: "●", attr: { style: `color: ${color}` } });
+				nameEl.appendText(` Color #${idx + 1}`);
+				new Setting(containerEl)
+					.setName(nameEl)
+					.setDesc('This will be the border Color used in the Charts you create.')
+					.addButton(btn => {
+						btn.setButtonText("Change Color");
+						new Picker({
+							parent: btn.buttonEl,
+							onDone: async (color) => {
+								this.plugin.settings.colors[idx] = color.hex;
+								await this.plugin.saveSettings();
+								this.display();
+							},
+							popup: "left",
+							color: color,
+							alpha: false,
+						});
+					})
+					.addExtraButton(btn => {
+						btn.setIcon("trash").setTooltip("Remove").onClick(async () => {
+							this.plugin.settings.colors.remove(color);
 							await this.plugin.saveSettings();
 							this.display();
-						},
-						popup: "left",
-						color: color,
-						alpha: false,
+						});
+						if (this.plugin.settings.colors.length === 1) {
+							btn.setDisabled(true);
+						}
+					})
+					.addExtraButton(btn => {
+						btn.setIcon("reset").setTooltip("Reset to default").onClick(async () => {
+							this.plugin.settings.colors[idx] = DEFAULT_SETTINGS.colors[idx] ?? "#ffffff";
+							await this.plugin.saveSettings();
+							this.display();
+						});
 					});
-				})
-				.addExtraButton(btn => {
-					btn.setIcon("trash").setTooltip("Remove").onClick(async () => {
-						this.plugin.settings.colors.remove(color);
-						await this.plugin.saveSettings();
-						this.display();
-					});
-					if (this.plugin.settings.colors.length === 1) {
-						btn.setDisabled(true);
-					}
-				})
-				.addExtraButton(btn => {
-					btn.setIcon("reset").setTooltip("Reset to default").onClick(async () => {
-						this.plugin.settings.colors[idx] = DEFAULT_SETTINGS.colors[idx] ?? "#ffffff";
-						await this.plugin.saveSettings();
-						this.display();
-					});
-				});
-		});
-
-		new Setting(containerEl)
-			.addButton(btn => {
-				btn.setButtonText("Add Color").onClick(async () => {
-					this.plugin.settings.colors.push("#ffffff");
-					await this.plugin.saveSettings();
-					this.display();
-				})
 			});
+
+			new Setting(containerEl)
+				.addButton(btn => {
+					btn.setButtonText("Add Color").onClick(async () => {
+						this.plugin.settings.colors.push("#ffffff");
+						await this.plugin.saveSettings();
+						this.display();
+					})
+				});
+		}
 
 		containerEl.createEl('h3', { text: "Chart to Image Converter" });
 
 		const detailEl = containerEl.createEl("details");
 		detailEl.createEl("summary", { text: "How to use" });
-		detailEl.createEl("img", {attr: {src: "https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif"}});
+		detailEl.createEl("img", { attr: { src: "https://media.discordapp.net/attachments/855181471643861002/897811615037136966/charttoimage.gif" } });
 
 		new Setting(containerEl)
 			.setName("Image Format")

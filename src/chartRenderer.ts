@@ -12,19 +12,35 @@ export default class Renderer {
         this.settings = settings;
     }
 
-    datasetPrep(yaml: any): { chartOptions: ChartConfiguration, width: string } {
+    datasetPrep(yaml: any, el: HTMLElement, themeColors = false): { chartOptions: ChartConfiguration, width: string } {
+        const colors = [];
+        if (this.settings.themeable || themeColors) {
+            let i = 1;
+            while (true) {
+                let color = getComputedStyle(el).getPropertyValue(`--chart-color-${i}`);
+                if (color) {
+                    colors.push(color);
+                    i++;
+                } else {
+                    break;
+                }
+            }
+        }
+
         const datasets = [];
         for (let i = 0; yaml.series.length > i; i++) {
             datasets.push({
                 label: yaml.series[i].title ?? "",
                 data: yaml.series[i].data,
-                backgroundColor: yaml.labelColors ? generateInnerColors(this.settings.colors) : generateInnerColors(this.settings.colors)[i],
-                borderColor: yaml.labelColors ? this.settings.colors : this.settings.colors[i],
+                backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.settings.colors)[i],
+                borderColor: yaml.labelColors ? colors.length ? colors : this.settings.colors : colors.length ? colors[i] : this.settings.colors[i],
                 borderWidth: 1,
                 fill: yaml.fill ?? false,
                 tension: yaml.tension ?? 0,
             });
         }
+
+        const gridColor = getComputedStyle(el).getPropertyValue('--background-modifier-border');
 
         let chartOptions;
 
@@ -39,7 +55,7 @@ export default class Renderer {
                     spanGaps: yaml.spanGaps,
                     scales: {
                         r: {
-                            grid: { color: 'rgba(122,122,122,0.3)' },
+                            grid: { color: gridColor },
                             beginAtZero: yaml.beginAtZero
                         },
                     },
@@ -76,7 +92,7 @@ export default class Renderer {
                             display: yaml.yDisplay,
                             stacked: yaml.stacked,
                             beginAtZero: yaml.beginAtZero,
-                            grid: { color: 'rgba(122,122,122,0.3)' },
+                            grid: { color: gridColor },
                             title: {
                                 display: yaml.yTitle,
                                 text: yaml.yTitle
@@ -92,7 +108,7 @@ export default class Renderer {
                             },
                             display: yaml.xDisplay,
                             stacked: yaml.stacked,
-                            grid: { color: 'rgba(122,122,122,0.3)' },
+                            grid: { color: gridColor },
                             title: {
                                 display: yaml.xTitle,
                                 text: yaml.xTitle
@@ -143,7 +159,7 @@ export default class Renderer {
         const destination = document.createElement('canvas');
         const destinationContext = destination.getContext("2d");
 
-        const chartOptions = this.datasetPrep(await parseYaml(yaml.replace("```chart", "").replace("```", "").replace(/\t/g, '    ')));
+        const chartOptions = this.datasetPrep(await parseYaml(yaml.replace("```chart", "").replace("```", "").replace(/\t/g, '    ')), document.body);
 
         new Chart(destinationContext, chartOptions.chartOptions);
 
@@ -180,7 +196,7 @@ export default class Renderer {
     }
 
     renderFromYaml(yaml: any, el: HTMLElement, ctx: MarkdownPostProcessorContext) {
-        ctx.addChild(new ChartRenderChild(this.datasetPrep(yaml), el, this));
+        ctx.addChild(new ChartRenderChild(this.datasetPrep(yaml, el), el, this));
     }
 }
 

@@ -2,6 +2,7 @@ export interface ChartPluginSettings {
     colors: string[];
     contextMenu: boolean;
     imageSettings: ImageOptions;
+    themeable: boolean;
 }
 
 export const DEFAULT_SETTINGS: ChartPluginSettings = {
@@ -16,8 +17,9 @@ export const DEFAULT_SETTINGS: ChartPluginSettings = {
     contextMenu: true,
     imageSettings: {
         format: 'image/png',
-        quality: 0.92,
-    }
+        quality: 0.92
+    },
+    themeable: false
 }
 
 export interface ImageOptions {
