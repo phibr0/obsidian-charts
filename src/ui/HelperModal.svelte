@@ -26,7 +26,7 @@ import type { Chart } from "chart.js";
     (yaml: any, el: HTMLElement) => {
       if(lastChart) lastChart.destroy();
       previewElement.lastElementChild?.remove();
-      lastChart = renderer.renderRaw(renderer.datasetPrep(parseYaml(yaml)), el);
+      lastChart = renderer.renderRaw(renderer.datasetPrep(parseYaml(yaml), el), el);
     },
     500,
     true
