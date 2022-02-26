@@ -44,6 +44,9 @@ export default class Renderer {
 
         let chartOptions;
 
+        Chart.defaults.color = getComputedStyle(el).getPropertyValue('--text-muted');
+        Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
+
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             chartOptions = {
                 type: yaml.type,
