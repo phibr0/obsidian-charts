@@ -46,6 +46,13 @@ export default class Renderer {
 
         Chart.defaults.color = getComputedStyle(el).getPropertyValue('--text-muted');
         Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
+        Chart.defaults.plugins = {
+            legend: {
+                display: yaml.legend,
+                position: yaml.legendPosition
+            }
+        };
+
 
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             chartOptions = {
@@ -61,12 +68,6 @@ export default class Renderer {
                             grid: { color: gridColor },
                             beginAtZero: yaml.beginAtZero
                         },
-                    },
-                    plugins: {
-                        legend: {
-                            display: yaml.legend,
-                            position: yaml.legendPosition
-                        }
                     },
                     layout: {
                         padding: yaml.padding
@@ -118,12 +119,6 @@ export default class Renderer {
                             }
                         }
                     },
-                    plugins: {
-                        legend: {
-                            display: yaml.legend,
-                            position: yaml.legendPosition
-                        }
-                    },
                     layout: {
                         padding: yaml.padding
                     }
@@ -138,12 +133,6 @@ export default class Renderer {
                 },
                 options: {
                     spanGaps: yaml.spanGaps,
-                    plugins: {
-                        legend: {
-                            display: yaml.legend,
-                            position: yaml.legendPosition
-                        }
-                    },
                     layout: {
                         padding: yaml.padding
                     }

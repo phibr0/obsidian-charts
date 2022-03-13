@@ -2,6 +2,8 @@
 
 This Plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
 
+**[Documentation](charts.phibr0.de)**
+
 ## Usage
 
 To create a Chart within Obsidian a Codeblock of the type `chart` is used. The Properties are set using YAML Syntax. Example:
@@ -463,4 +465,4 @@ Select the whole Chart Codeblock and run the Command "Create image from Chart" t
 
 If you find this Plugin helpful, consider supporting me:
 
-<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a pizza&emoji=🍕&slug=phibr0&button_colour=FFDD00&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=ffffff"></a>
+<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?slug=phibr0&font_family=Inter&button_colour=FFDD00"></a>
