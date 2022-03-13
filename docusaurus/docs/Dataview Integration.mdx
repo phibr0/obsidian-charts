@@ -1,0 +1,48 @@
+---
+sidebar_position: 5
+---
+
+If you want to use this Plugin in combination with Plugins like Dataview, I recommend using the API. When this Plugin is enabled, you can render a Chart using the following:
+
+```js
+window.renderChart(data, element);
+```
+
+This is a full Example:
+
+````md
+test:: First Test
+mark:: 6
+
+```dataviewjs
+const data = dv.current()
+
+const chartData = {
+    type: 'bar',
+    data: {
+        labels: [data.test],
+        datasets: [{
+            label: 'Grades',
+            data: [data.mark],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    }
+}
+
+window.renderChart(chartData, this.container);
+```
+````
+
+The data is the standard [Chart.js](https://www.chartjs.org/docs/latest/) data payload, you can use everything it supports in there.
+
+:::caution
+
+You have to use dataviewjs for this!
+
+:::

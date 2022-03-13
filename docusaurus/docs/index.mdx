@@ -1,0 +1,69 @@
+---
+sidebar_position: 1
+---
+
+# Getting started
+
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts)](https://github.com/phibr0/obsidian-charts/releases) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
+
+Obsidian Charts let's you create interactive Charts inside [Obsidian](https://www.obsidian.md).
+
+## What this can do
+
+import { Bar, Line } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+
+You can create Charts like this one in your markdown notes.
+
+<div style={{width: "50%"}}>
+  <Bar
+  datasetIdKey="id"
+  data={{
+    height: "10px",
+    labels: ["Friday", "Saturday", "Sunday"],
+    datasets: [
+      {
+        id: 1,
+        label: "Sleep",
+        data: [6, 8, 9],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+        ],
+        borderWidth: 2,
+      },
+    ],
+  }}
+  options={{
+    scales: {
+        x: {
+          grid: {
+            color: "rgba(128, 128, 128, 0.2)",
+          }
+        },
+        y: {
+          grid: {
+            color: "rgba(128, 128, 128, 0.2)",
+          }
+        },
+      }
+  }}
+/>
+</div>
+
+**But how?** First [install the Obsidian Charts Plugin](/installation).
+
+:::info SUPPORTING
+
+If this plugin helps you, please consider donating to keep development going.
+
+[![bmc](https://img.buymeacoffee.com/button-api/?slug=phibr0&font_family=Inter&button_colour=FFDD00)](https://www.buymeacoffee.com/phibr0)
+
+:::

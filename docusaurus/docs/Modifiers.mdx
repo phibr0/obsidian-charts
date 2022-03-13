@@ -1,0 +1,218 @@
+# Modifiers
+
+## `width` Modifier
+
+The `width` Modifier is used to set the width of **any** Chart. It is advised to use it for the following Charts:
+
+- Pie Chart
+- Doughnut Chart
+- Radar Chart
+- Polar Area Chart
+
+The Values can be any valid CSS Property, for examples fixed Values (e.g. `400px`) or dynamic Values (e.g `40%`).
+
+- Default: `100%`
+
+### Example
+
+````yaml
+```chart
+type: polarArea
+labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+series:
+    - title: Title 1
+    data: [1,2,3,4,5]
+    - title: Title 2
+    data: [5,4,3,2,1]
+width: 40%
+```
+````
+
+## `fill` Modifier
+
+The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [1,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,1]
+        - title: Title 3
+        data: [8,2,5,-1,4]
+    fill: true
+```
+````
+
+## `spanGaps` Modifier
+
+The `spanGaps` Modifier is used to fill in missing Datapoints.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [1,2,null,4,5]
+        - title: Title 2
+        data: [5,null,null,null,1]
+        - title: Title 3
+        data: [8,2,5,-1,4]
+    spanGaps: true
+```
+````
+
+## `tension` Modifier
+
+The `tension` Modifier is used in Line Charts to set the tension of the Traces to the given points. A Value of 0 means no smoothness at all, a value of 1 is maximum smoothness.
+
+- Expected: Double (0-1)
+- Default: 0
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [1,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,1]
+        - title: Title 3
+        data: [8,2,5,-1,4]
+    tension: 0.5
+```
+````
+
+## `beginAtZero` Modifier
+
+The `beginAtZero` Modifier is used to force set the Chart to begin at 0. Otherwise the Chart will cut out all unused space.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [4,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,2]
+        - title: Title 3
+        data: [8,2,5,3,4]
+    beginAtZero: true
+```
+````
+
+## `legend` Modifier
+
+The `legend` modifier sets whether or not the legend will be displayed. 
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `true`
+
+### Example 
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [4,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,2]
+        - title: Title 3
+        data: [8,2,5,3,4]
+    legend: false
+```
+````
+
+## `legendPosition` Modifier
+
+Determines where the legend will be displayed.
+
+- Expected `top`, `left`, `bottom`, `right`
+- Default: `top`
+
+## Axes Modifiers
+
+Valid for `bar` and `line` types only. 
+
+### `indexAxis` Modifier
+
+Allows horizontal graphs.
+
+- Expected: `x` or `y`
+- Default: `x`
+
+### `stacked` Modifier
+
+Will change the bar and line graphs to be stacked.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+### Modifiers by Axis
+
+Prepend either the x or y axis to any of these to modify them. 
+
+#### `Title` Modifier
+
+Use either `xTitle: "Title here"` or `yTitle: "Title here"` to add a Title to any Axis. 
+
+#### `Reverse` Modifier 
+
+Can reverse the axis it is applied to 
+
+- Expected: `boolean` (`true` or `false`) 
+- Default: `false`
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [4,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,2]
+        - title: Title 3
+        data: [8,2,5,3,4]
+    xReverse: true
+```
+````
+
+### `Min` and `Max` Modifiers
+
+Can set the min and max of the respecitve axis. `Min` will override beginAtZero. 
+Use `rMax` to set the max for radar and polar area charts.
+
+- Expected: `int` 
+
+### `Display` and `TickDisplay` Modifiers
+
+Determines whether the axis (`Display`) or the ticks of the axis (`TickDisplay`) are visible.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `true`
