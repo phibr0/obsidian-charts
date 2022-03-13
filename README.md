@@ -2,7 +2,7 @@
 
 This Plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
 
-**[Documentation](charts.phibr0.de)**
+**[Documentation](https://charts.phibr0.de)**
 
 ## Usage
 
