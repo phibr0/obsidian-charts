@@ -23,12 +23,14 @@ export default class ChartPlugin extends Plugin {
 			return;
 		}
 
-		if (!data || !data.labels || !data.series || !data.type) {
-			renderError("Missing type, labels or series", el)
-			return;
+		if(!data.id) {
+			if (!data || !data.type || !data.labels || !data.series) {
+				renderError("Missing type, labels or series", el)
+				return;
+			}
 		}
 
-		this.renderer.renderFromYaml(data, el, ctx);
+		await this.renderer.renderFromYaml(data, el, ctx);
 	}
 
 	async loadSettings() {
@@ -46,7 +48,7 @@ export default class ChartPlugin extends Plugin {
 
 		addIcons();
 
-		this.renderer = new Renderer(this.settings);
+		this.renderer = new Renderer(this);
 
 		//@ts-ignore
 		window.renderChart = this.renderer.renderRaw;

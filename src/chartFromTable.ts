@@ -3,20 +3,7 @@ import { Extractor } from "markdown-tables-to-json";
 import type { DataField } from 'src/constants/settingsConstants';
 
 export async function chartFromTable(editor: Editor, layout: 'columns' | 'rows') {
-    let fields: any;
-    try {
-        fields = Extractor.extractObject(editor.getSelection(), layout, false);
-    } catch (error) {
-        new Notice('Table malformed')
-        throw error;
-    }
-    const labels = Object.keys(Object.values(fields)[0]);
-    const dataFields: DataField[] = Object.keys(fields).map((key) => {
-        return {
-            dataTitle: key,
-            data: Object.values(fields[key]).join(','),
-        }
-    });
+    const {labels, dataFields} = generateTableData(editor.getSelection(), layout);
     const chart = `\`\`\`chart
 type: bar
 labels: [${labels}]
@@ -29,4 +16,22 @@ beginAtZero: true
 \`\`\``;
 
     editor.replaceSelection(chart);
+}
+
+export function generateTableData(table: string, layout: 'columns' | 'rows') {
+    let fields: any;
+    try {
+        fields = Extractor.extractObject(table, layout, false);
+    } catch (error) {
+        new Notice('Table malformed')
+        throw error;
+    }
+    const labels = Object.keys(Object.values(fields)[0]);
+    const dataFields: DataField[] = Object.keys(fields).map((key) => {
+        return {
+            dataTitle: key,
+            data: Object.values(fields[key]) as string[]
+        }
+    });
+    return {labels, dataFields};
 }

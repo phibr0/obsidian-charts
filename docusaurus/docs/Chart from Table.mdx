@@ -1,3 +1,43 @@
+## Link Table to Chart
+
+*Introduced in Version 3.3.0*
+
+![](https://i.imgur.com/cOB2ZyB.gif)
+
+1. Add a Block ID (`^name`) to your Table:
+    ```md
+    |       | Test1 | Test2 | Test3 |
+    | ----- | ----- | ----- | ----- |
+    | Data1 | 1     | 2     | 3.33  |
+    | Data2 | 3     | 2     | 1     |
+    | Data3 | 6.7   | 4     | 2     |
+    ^table
+    ```
+2. Add the same `id` to your Chart Codeblock
+    ````md
+    ```chart
+    type: bar
+    id: <blockId>
+    layout: rows
+    width: 80%
+    beginAtZero: true
+    ```
+    ````
+3. (If you want to link a Table from a different File, also include the Filename in the `file` attribute)
+    ````md
+    ```chart
+    type: bar
+    id: <blockId>
+    file: <Filename>
+    layout: rows
+    width: 80%
+    beginAtZero: true
+    ```
+    ````
+4. Choose the column or row oriented layout using the `layout` key. Options are `rows` or `columns`.
+
+## Replace Table with Chart
+
 You can select a whole Markdown-Table and run the Command "Create Chart from Table" to replace it with a Chart.
 
 <img src="https://media.discordapp.net/attachments/855181471643861002/897811518022909982/tabletochart.gif" referrerpolicy="no-referrer" />
