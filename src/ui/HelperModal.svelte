@@ -23,10 +23,10 @@ import type { Chart } from "chart.js";
   let chart: string;
   let previewElement: HTMLDivElement = null;
   const debouncedRenderChart = debounce(
-    (yaml: any, el: HTMLElement) => {
+    async (yaml: any, el: HTMLElement) => {
       if(lastChart) lastChart.destroy();
       previewElement.lastElementChild?.remove();
-      lastChart = renderer.renderRaw(renderer.datasetPrep(parseYaml(yaml), el), el);
+      lastChart = renderer.renderRaw(await renderer.datasetPrep(parseYaml(yaml), el), el);
     },
     500,
     true

@@ -1,44 +1,53 @@
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import './date-adapter/chartjs-adapter-moment.esm.js';
-import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml } from 'obsidian';
+import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml, TFile } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
 import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
+import type ChartPlugin from 'src/main';
+import { generateTableData } from 'src/chartFromTable';
 Chart.register(...registerables);
 
-export default class Renderer {
-    settings: ChartPluginSettings;
+// I need to refactor this
+// Or just rewrite it completely
+// Its a mess
 
-    constructor(settings: ChartPluginSettings) {
-        this.settings = settings;
+export default class Renderer {
+    plugin: ChartPlugin;
+
+    constructor(plugin: ChartPlugin) {
+        this.plugin = plugin;
     }
 
-    datasetPrep(yaml: any, el: HTMLElement, themeColors = false): { chartOptions: ChartConfiguration, width: string } {
-        const colors = [];
-        if (this.settings.themeable || themeColors) {
-            let i = 1;
-            while (true) {
-                let color = getComputedStyle(el).getPropertyValue(`--chart-color-${i}`);
-                if (color) {
-                    colors.push(color);
-                    i++;
-                } else {
-                    break;
+    async datasetPrep(yaml: any, el: HTMLElement, themeColors = false): Promise<{ chartOptions: ChartConfiguration; width: string; }> {
+        let datasets = [];
+        if (!yaml.id) {
+            const colors = [];
+            if (this.plugin.settings.themeable || themeColors) {
+                let i = 1;
+                while (true) {
+                    let color = getComputedStyle(el).getPropertyValue(`--chart-color-${i}`);
+                    if (color) {
+                        colors.push(color);
+                        i++;
+                    } else {
+                        break;
+                    }
                 }
+            }
+            for (let i = 0; yaml.series.length > i; i++) {
+                datasets.push({
+                    label: yaml.series[i].title ?? "",
+                    data: yaml.series[i].data,
+                    backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.plugin.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.plugin.settings.colors)[i],
+                    borderColor: yaml.labelColors ? colors.length ? colors : this.plugin.settings.colors : colors.length ? colors[i] : this.plugin.settings.colors[i],
+                    borderWidth: 1,
+                    fill: yaml.fill ?? false,
+                    tension: yaml.tension ?? 0,
+                });
             }
         }
 
-        const datasets = [];
-        for (let i = 0; yaml.series.length > i; i++) {
-            datasets.push({
-                label: yaml.series[i].title ?? "",
-                data: yaml.series[i].data,
-                backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.settings.colors)[i],
-                borderColor: yaml.labelColors ? colors.length ? colors : this.settings.colors : colors.length ? colors[i] : this.settings.colors[i],
-                borderWidth: 1,
-                fill: yaml.fill ?? false,
-                tension: yaml.tension ?? 0,
-            });
-        }
+        let labels = yaml.labels;
 
         const gridColor = getComputedStyle(el).getPropertyValue('--background-modifier-border');
 
@@ -50,7 +59,8 @@ export default class Renderer {
             legend: {
                 display: yaml.legend,
                 position: yaml.legendPosition
-            }
+            },
+            ...Chart.defaults.plugins
         };
 
 
@@ -58,8 +68,8 @@ export default class Renderer {
             chartOptions = {
                 type: yaml.type,
                 data: {
-                    labels: yaml.labels,
-                    datasets: datasets
+                    labels,
+                    datasets
                 },
                 options: {
                     spanGaps: yaml.spanGaps,
@@ -78,8 +88,8 @@ export default class Renderer {
             chartOptions = {
                 type: yaml.type,
                 data: {
-                    labels: yaml.labels,
-                    datasets: datasets
+                    labels,
+                    datasets
                 },
                 options: {
                     indexAxis: yaml.indexAxis,
@@ -128,8 +138,8 @@ export default class Renderer {
             chartOptions = {
                 type: yaml.type,
                 data: {
-                    labels: yaml.labels,
-                    datasets: datasets
+                    labels,
+                    datasets
                 },
                 options: {
                     spanGaps: yaml.spanGaps,
@@ -151,7 +161,7 @@ export default class Renderer {
         const destination = document.createElement('canvas');
         const destinationContext = destination.getContext("2d");
 
-        const chartOptions = this.datasetPrep(await parseYaml(yaml.replace("```chart", "").replace("```", "").replace(/\t/g, '    ')), document.body);
+        const chartOptions = await this.datasetPrep(await parseYaml(yaml.replace("```chart", "").replace("```", "").replace(/\t/g, '    ')), document.body);
 
         new Chart(destinationContext, chartOptions.chartOptions);
 
@@ -187,8 +197,8 @@ export default class Renderer {
         }
     }
 
-    renderFromYaml(yaml: any, el: HTMLElement, ctx: MarkdownPostProcessorContext) {
-        ctx.addChild(new ChartRenderChild(this.datasetPrep(yaml, el), el, this));
+    async renderFromYaml(yaml: any, el: HTMLElement, ctx: MarkdownPostProcessorContext) {
+        this.plugin.app.workspace.onLayoutReady(() => ctx.addChild(new ChartRenderChild(yaml, el, this, ctx.sourcePath)));
     }
 }
 
@@ -196,19 +206,89 @@ class ChartRenderChild extends MarkdownRenderChild {
     data: any;
     chart: null | Chart;
     renderer: Renderer;
+    ownPath: string;
+    el: HTMLElement;
 
-    constructor(data: any, el: HTMLElement, renderer: Renderer) {
+    constructor(data: any, el: HTMLElement, renderer: Renderer, ownPath: string) {
         super(el);
+        this.el = el;
         this.data = data;
         this.renderer = renderer;
+        this.ownPath = ownPath;
+        this.eventHandler = this.eventHandler.bind(this);
     }
 
-    onload() {
-        this.chart = this.renderer.renderRaw(this.data, this.containerEl);
+    async onload() {
+        try {
+            const data = await this.renderer.datasetPrep(this.data, this.el);
+            let x: any = {};
+            if (this.data.id) {
+                const colors = [];
+                if (this.renderer.plugin.settings.themeable) {
+                    let i = 1;
+                    while (true) {
+                        let color = getComputedStyle(this.el).getPropertyValue(`--chart-color-${i}`);
+                        if (color) {
+                            colors.push(color);
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                x.datasets = [];
+                let linkDest: TFile;
+                if (this.data.file) linkDest = this.renderer.plugin.app.metadataCache.getFirstLinkpathDest(this.data.file, this.renderer.plugin.app.workspace.getActiveFile().path);
+                const pos = this.renderer.plugin.app.metadataCache.getFileCache(
+                    linkDest ?? this.renderer.plugin.app.vault.getAbstractFileByPath(this.ownPath) as TFile).sections.find(pre => pre.id === this.data.id)?.position;
+                if (!pos) {
+                    throw "Invalid id and/or file";
+                }
+
+                const tableString = (await this.renderer.plugin.app.vault.cachedRead(this.data.file ? linkDest : this.renderer.plugin.app.vault.getAbstractFileByPath(this.ownPath) as TFile)).substring(pos.start.offset, pos.end.offset);
+                let tableData;
+                try {
+                    tableData = generateTableData(tableString, this.data.layout ?? 'columns');
+                } catch (error) {
+                    throw "There is no table at that id and/or file"
+                }
+                x.labels = tableData.labels;
+                for (let i = 0; tableData.dataFields.length > i; i++) {
+                    x.datasets.push({
+                        label: tableData.dataFields[i].dataTitle ?? "",
+                        data: tableData.dataFields[i].data,
+                        backgroundColor: this.data.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.renderer.plugin.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.renderer.plugin.settings.colors)[i],
+                        borderColor: this.data.labelColors ? colors.length ? colors : this.renderer.plugin.settings.colors : colors.length ? colors[i] : this.renderer.plugin.settings.colors[i],
+                        borderWidth: 1,
+                        fill: this.data.fill ?? false,
+                        tension: this.data.tension ?? 0,
+                    });
+                }
+                data.chartOptions.data.labels = x.labels;
+                data.chartOptions.data.datasets = x.datasets;
+
+
+                this.chart = this.renderer.renderRaw(data, this.containerEl);
+            }
+        } catch (error) {
+            renderError(error, this.el);
+        }
+        if (this.data.id) {
+            this.renderer.plugin.app.metadataCache.on("changed", this.eventHandler);
+        }
+    }
+
+    eventHandler(file: TFile) {
+        if (this.data.file ? file.basename === this.data.file : file.path === this.ownPath) {
+            this.onunload();
+            this.onload();
+        }
     }
 
     onunload() {
+        this.el.empty();
         this.chart && this.chart.destroy();
         this.chart = null;
+        this.renderer.plugin.app.metadataCache.off("changed", this.eventHandler);
     }
 }

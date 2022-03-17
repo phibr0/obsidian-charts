@@ -3,20 +3,6 @@ import { App, MarkdownRenderer, Modal, Notice, PluginSettingTab, request, Settin
 import type ChartPlugin from "../main";
 import Picker from 'vanilla-picker';
 
-class DocumentationModal extends Modal {
-	async onOpen() {
-		const el = this.contentEl;
-
-		const markdown = await request({ url: "https://raw.githubusercontent.com/phibr0/obsidian-charts/master/README.md" });
-		await MarkdownRenderer.renderMarkdown(
-			markdown.substring(markdown.indexOf("## Usage"), markdown.indexOf("## How to install")),
-			el,
-			null,
-			null
-		);
-	}
-}
-
 export class ChartSettingTab extends PluginSettingTab {
 	plugin: ChartPlugin;
 
@@ -39,14 +25,6 @@ export class ChartSettingTab extends PluginSettingTab {
 		containerEl.createEl('h2', { text: 'Settings - Obsidian Charts' });
 
 		containerEl.createEl('h3', { text: "General" });
-
-		new Setting(containerEl)
-			.setName("Read the Documentation")
-			.setDesc("Find out how to create all these beautiful Charts")
-			.addButton(cb => {
-				cb.setButtonText("Read")
-					.onClick(() => new DocumentationModal(this.app).open());
-			})
 
 		new Setting(containerEl)
 			.setName("Show Button in Context Menu")
