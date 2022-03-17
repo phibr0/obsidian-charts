@@ -215,7 +215,8 @@ class ChartRenderChild extends MarkdownRenderChild {
         this.data = data;
         this.renderer = renderer;
         this.ownPath = ownPath;
-        this.eventHandler = this.eventHandler.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
+        this.reload = this.reload.bind(this);
     }
 
     async onload() {
@@ -274,21 +275,27 @@ class ChartRenderChild extends MarkdownRenderChild {
             renderError(error, this.el);
         }
         if (this.data.id) {
-            this.renderer.plugin.app.metadataCache.on("changed", this.eventHandler);
+            this.renderer.plugin.app.metadataCache.on("changed", this.changeHandler);
+        }
+        this.renderer.plugin.app.workspace.on('css-change', this.reload);
+    }
+
+    changeHandler(file: TFile) {
+        if (this.data.file ? file.basename === this.data.file : file.path === this.ownPath) {
+            this.reload();
         }
     }
 
-    eventHandler(file: TFile) {
-        if (this.data.file ? file.basename === this.data.file : file.path === this.ownPath) {
-            this.onunload();
-            this.onload();
-        }
+    reload() {
+        this.onunload();
+        this.onload();
     }
 
     onunload() {
         this.el.empty();
         this.chart && this.chart.destroy();
         this.chart = null;
-        this.renderer.plugin.app.metadataCache.off("changed", this.eventHandler);
+        this.renderer.plugin.app.metadataCache.off("changed", this.changeHandler);
+        this.renderer.plugin.app.workspace.off('css-change', this.reload);
     }
 }
