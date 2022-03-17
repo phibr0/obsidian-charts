@@ -17,7 +17,7 @@ export default class ChartPlugin extends Plugin {
 
 		let data;
 		try {
-			data = await parseYaml(content);
+			data = await parseYaml(content.replace(/	/g, '    '));
 		} catch (error) {
 			renderError(error, el);
 			return;

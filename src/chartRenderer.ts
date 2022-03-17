@@ -268,8 +268,8 @@ class ChartRenderChild extends MarkdownRenderChild {
                 data.chartOptions.data.datasets = x.datasets;
 
 
-                this.chart = this.renderer.renderRaw(data, this.containerEl);
             }
+            this.chart = this.renderer.renderRaw(data, this.containerEl);
         } catch (error) {
             renderError(error, this.el);
         }
