@@ -205,7 +205,7 @@ Can reverse the axis it is applied to
 
 ### `Min` and `Max` Modifiers
 
-Can set the min and max of the respecitve axis. `Min` will override beginAtZero. 
+Can set the min and max of the respecitve axis (like: `xMax` or `yMin`). `Min` will override beginAtZero. 
 Use `rMax` to set the max for radar and polar area charts.
 
 - Expected: `int` 
@@ -216,3 +216,9 @@ Determines whether the axis (`Display`) or the ticks of the axis (`TickDisplay`)
 
 - Expected: `boolean` (`true` or `false`)
 - Default: `true`
+
+### `time` Modifier
+
+If you use e.g. dates on your X Axis, you can set the `time` modifier to automatically format them. 
+
+- Expected: `string` (`day`, `week`, `month`, `year`, etc.)

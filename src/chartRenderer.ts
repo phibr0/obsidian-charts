@@ -47,6 +47,8 @@ export default class Renderer {
             }
         }
 
+        let time = yaml.time ? { type: 'time', time: { unit: yaml.time } } : null
+
         let labels = yaml.labels;
 
         const gridColor = getComputedStyle(el).getPropertyValue('--background-modifier-border');
@@ -75,6 +77,7 @@ export default class Renderer {
                     spanGaps: yaml.spanGaps,
                     scales: {
                         r: {
+                            ...time,
                             grid: { color: gridColor },
                             beginAtZero: yaml.beginAtZero
                         },
@@ -113,6 +116,7 @@ export default class Renderer {
                             }
                         },
                         x: {
+                            ...time,
                             min: yaml.xMin,
                             max: yaml.xMax,
                             reverse: yaml.xReverse,
