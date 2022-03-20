@@ -58,11 +58,12 @@ export default class Renderer {
         Chart.defaults.color = getComputedStyle(el).getPropertyValue('--text-muted');
         Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
         Chart.defaults.plugins = {
+            ...Chart.defaults.plugins,
             legend: {
+                ...Chart.defaults.plugins.legend,
                 display: yaml.legend,
                 position: yaml.legendPosition
             },
-            ...Chart.defaults.plugins
         };
 
 
