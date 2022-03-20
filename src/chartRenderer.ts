@@ -62,11 +62,10 @@ export default class Renderer {
             legend: {
                 ...Chart.defaults.plugins.legend,
                 display: yaml.legend,
-                position: yaml.legendPosition
+                position: yaml.legendPosition ?? "top",
             },
         };
         Chart.defaults.layout.padding = yaml.padding;
-
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             (chartOptions as ChartConfiguration<"polarArea" | "radar">) = {
                 type: yaml.type,
