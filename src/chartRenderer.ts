@@ -1,4 +1,4 @@
-import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, RadarControllerChartOptions, registerables } from 'chart.js';
 import './date-adapter/chartjs-adapter-moment.esm.js';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml, TFile } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
@@ -53,7 +53,7 @@ export default class Renderer {
 
         const gridColor = getComputedStyle(el).getPropertyValue('--background-modifier-border');
 
-        let chartOptions;
+        let chartOptions: ChartConfiguration;
 
         Chart.defaults.color = getComputedStyle(el).getPropertyValue('--text-muted');
         Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
@@ -65,31 +65,30 @@ export default class Renderer {
                 position: yaml.legendPosition
             },
         };
-
+        Chart.defaults.layout.padding = yaml.padding;
 
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
-            chartOptions = {
+            (chartOptions as ChartConfiguration<"polarArea" | "radar">) = {
                 type: yaml.type,
                 data: {
                     labels,
                     datasets
                 },
                 options: {
-                    spanGaps: yaml.spanGaps,
                     scales: {
+                        //@ts-ignore
                         r: {
                             ...time,
                             grid: { color: gridColor },
-                            beginAtZero: yaml.beginAtZero
+                            beginAtZero: yaml.beginAtZero,
+                            max: yaml.rMax,
+                            min: yaml.rMin,
                         },
                     },
-                    layout: {
-                        padding: yaml.padding
-                    }
                 }
             };
         } else if (yaml.type == 'bar' || yaml.type == 'line') {
-            chartOptions = {
+            (chartOptions as ChartConfiguration<"bar" | "line">) = {
                 type: yaml.type,
                 data: {
                     labels,
@@ -116,6 +115,7 @@ export default class Renderer {
                                 text: yaml.yTitle
                             }
                         },
+                        //@ts-ignore
                         x: {
                             ...time,
                             min: yaml.xMin,
@@ -134,23 +134,18 @@ export default class Renderer {
                             }
                         }
                     },
-                    layout: {
-                        padding: yaml.padding
-                    }
                 }
             };
         } else {
-            chartOptions = {
+            (chartOptions as ChartConfiguration<"pie" | "doughnut" | "bubble" | "scatter">) = {
                 type: yaml.type,
                 data: {
                     labels,
                     datasets
                 },
                 options: {
+                    //@ts-ignore
                     spanGaps: yaml.spanGaps,
-                    layout: {
-                        padding: yaml.padding
-                    }
                 }
             };
         }
