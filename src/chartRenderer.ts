@@ -66,6 +66,7 @@ export default class Renderer {
             },
         };
         Chart.defaults.layout.padding = yaml.padding;
+        
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             (chartOptions as ChartConfiguration<"polarArea" | "radar">) = {
                 type: yaml.type,
@@ -82,6 +83,9 @@ export default class Renderer {
                             beginAtZero: yaml.beginAtZero,
                             max: yaml.rMax,
                             min: yaml.rMin,
+                            ticks: {
+                                backdropColor: gridColor
+                            }
                         },
                     },
                 }
