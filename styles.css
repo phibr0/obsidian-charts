@@ -18,3 +18,8 @@ div.chart-error {
 div.chart-error pre > code {
   color: crimson !important;
 }
+
+.print .block-language-chart {
+  /* Hardcoded with for printed Charts, see #41 */
+  width: 500px !important;
+}
