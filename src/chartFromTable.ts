@@ -27,7 +27,7 @@ export function generateTableData(table: string, layout: 'columns' | 'rows', sel
         throw error;
     }
     const labels = Object.keys(Object.values(fields)[0]);
-    const dataFields: DataField[] = Object.keys(fields).map((key) => {
+    let dataFields: DataField[] = Object.keys(fields).map((key) => {
         return {
             dataTitle: key,
             data: Object.values(fields[key]) as string[]
@@ -35,12 +35,8 @@ export function generateTableData(table: string, layout: 'columns' | 'rows', sel
     });
 
     if(selected) {
-        dataFields.filter((v) => {
-            if(!selected.contains(v.dataTitle)) {
-                dataFields.remove(v)
-            }
-        });
+        dataFields = dataFields.filter(value => selected.contains(value.dataTitle));
     }
-    
+
     return {labels, dataFields};
 }
