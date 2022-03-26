@@ -252,7 +252,7 @@ class ChartRenderChild extends MarkdownRenderChild {
                 const tableString = (await this.renderer.plugin.app.vault.cachedRead(this.data.file ? linkDest : this.renderer.plugin.app.vault.getAbstractFileByPath(this.ownPath) as TFile)).substring(pos.start.offset, pos.end.offset);
                 let tableData;
                 try {
-                    tableData = generateTableData(tableString, this.data.layout ?? 'columns');
+                    tableData = generateTableData(tableString, this.data.layout ?? 'columns', this.data.select);
                 } catch (error) {
                     throw "There is no table at that id and/or file"
                 }

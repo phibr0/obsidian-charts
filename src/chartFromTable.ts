@@ -18,7 +18,7 @@ beginAtZero: true
     editor.replaceSelection(chart);
 }
 
-export function generateTableData(table: string, layout: 'columns' | 'rows') {
+export function generateTableData(table: string, layout: 'columns' | 'rows', selected?: string[]) {
     let fields: any;
     try {
         fields = Extractor.extractObject(table, layout, false);
@@ -33,5 +33,14 @@ export function generateTableData(table: string, layout: 'columns' | 'rows') {
             data: Object.values(fields[key]) as string[]
         }
     });
+
+    if(selected) {
+        dataFields.filter((v) => {
+            if(!selected.contains(v.dataTitle)) {
+                dataFields.remove(v)
+            }
+        });
+    }
+    
     return {labels, dataFields};
 }
