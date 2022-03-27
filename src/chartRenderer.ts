@@ -297,7 +297,6 @@ class ChartRenderChild extends MarkdownRenderChild {
     onunload() {
         this.renderer.plugin.app.metadataCache.off("changed", this.changeHandler);
         this.renderer.plugin.app.workspace.off('css-change', this.reload);
-        this.el.style.height = this.el.querySelector('canvas').clientHeight + 'px';
         this.el.empty();
         this.chart && this.chart.destroy();
         this.chart = null;
