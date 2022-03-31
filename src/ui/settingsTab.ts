@@ -65,7 +65,7 @@ export class ChartSettingTab extends PluginSettingTab {
 				await plugin.saveSettings();
 				this.display();
 			})
-		})
+		});
 
 		if (!plugin.settings.themeable) {
 			plugin.settings.colors.forEach((color, idx) => {

@@ -38,7 +38,7 @@ export default class Renderer {
                 datasets.push({
                     label: yaml.series[i].title ?? "",
                     data: yaml.series[i].data,
-                    backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.plugin.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.plugin.settings.colors)[i],
+                    backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors, yaml.transparency) : generateInnerColors(this.plugin.settings.colors, yaml.transparency) : colors.length ? generateInnerColors(colors, yaml.transparency)[i] : generateInnerColors(this.plugin.settings.colors, yaml.transparency)[i],
                     borderColor: yaml.labelColors ? colors.length ? colors : this.plugin.settings.colors : colors.length ? colors[i] : this.plugin.settings.colors[i],
                     borderWidth: 1,
                     fill: yaml.fill ?? false,
@@ -261,7 +261,7 @@ class ChartRenderChild extends MarkdownRenderChild {
                     x.datasets.push({
                         label: tableData.dataFields[i].dataTitle ?? "",
                         data: tableData.dataFields[i].data,
-                        backgroundColor: this.data.labelColors ? colors.length ? generateInnerColors(colors) : generateInnerColors(this.renderer.plugin.settings.colors) : colors.length ? generateInnerColors(colors)[i] : generateInnerColors(this.renderer.plugin.settings.colors)[i],
+                        backgroundColor: this.data.labelColors ? colors.length ? generateInnerColors(colors, this.data.transparency) : generateInnerColors(this.renderer.plugin.settings.colors, this.data.transparency) : colors.length ? generateInnerColors(colors, this.data.transparency)[i] : generateInnerColors(this.renderer.plugin.settings.colors, this.data.transparency)[i],
                         borderColor: this.data.labelColors ? colors.length ? colors : this.renderer.plugin.settings.colors : colors.length ? colors[i] : this.renderer.plugin.settings.colors[i],
                         borderWidth: 1,
                         fill: this.data.fill ?? false,

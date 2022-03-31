@@ -3,8 +3,9 @@ import type { App, Editor, TFile } from "obsidian";
 import type { ChartPluginSettings } from "src/constants/settingsConstants";
 import type Renderer from "src/chartRenderer";
 
-export function generateInnerColors(colors: string[]) {
-    return colors.map((color: string) => chroma(color.trim()).alpha(0.25).hex());
+export function generateInnerColors(colors: string[], alpha = 0.25) {
+    if(typeof alpha != 'number') throw "Provided alpha value is not a number"
+    return colors.map((color: string) => chroma(color.trim()).alpha(alpha).hex());
 }
 
 export function renderError(error: any, el: HTMLElement) {
