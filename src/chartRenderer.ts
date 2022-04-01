@@ -41,7 +41,7 @@ export default class Renderer {
                     backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors, yaml.transparency) : generateInnerColors(this.plugin.settings.colors, yaml.transparency) : colors.length ? generateInnerColors(colors, yaml.transparency)[i] : generateInnerColors(this.plugin.settings.colors, yaml.transparency)[i],
                     borderColor: yaml.labelColors ? colors.length ? colors : this.plugin.settings.colors : colors.length ? colors[i] : this.plugin.settings.colors[i],
                     borderWidth: 1,
-                    fill: yaml.fill ?? false,
+                    fill: yaml.fill ? yaml.stacked ? i == 0 ? 'origin' : '-1' : true : false, //See https://github.com/phibr0/obsidian-charts/issues/53#issuecomment-1084869550
                     tension: yaml.tension ?? 0,
                 });
             }
@@ -264,7 +264,7 @@ class ChartRenderChild extends MarkdownRenderChild {
                         backgroundColor: this.data.labelColors ? colors.length ? generateInnerColors(colors, this.data.transparency) : generateInnerColors(this.renderer.plugin.settings.colors, this.data.transparency) : colors.length ? generateInnerColors(colors, this.data.transparency)[i] : generateInnerColors(this.renderer.plugin.settings.colors, this.data.transparency)[i],
                         borderColor: this.data.labelColors ? colors.length ? colors : this.renderer.plugin.settings.colors : colors.length ? colors[i] : this.renderer.plugin.settings.colors[i],
                         borderWidth: 1,
-                        fill: this.data.fill ?? false,
+                        fill: this.data.fill ? this.data.stacked ? i == 0 ? 'origin' : '-1' : true : false,
                         tension: this.data.tension ?? 0,
                     });
                 }
