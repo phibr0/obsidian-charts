@@ -19,5 +19,5 @@ sidebar_position: 2
 2.  Move `manifest.json` and `main.js` to `<vault>/.obsidian/plugins/obsidian-charts`
 3.  Reload Obsidian (CTRL + R)
 4.  Go to settings and disable safe mode
-5.  Enable `Advanced Obsidian URI`
+5.  Enable `Obsidian Charts`
 
