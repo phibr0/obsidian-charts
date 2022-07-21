@@ -41,7 +41,7 @@ export class ChartSettingTab extends PluginSettingTab {
 			.setName('Donate')
 			.setDesc('If you like this Plugin, consider donating to support continued development:')
 			.addButton((bt) => {
-				bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
+				bt.buttonEl.outerHTML = `<a href="https://ko-fi.com/phibr0"><img src="https://uploads-ssl.webflow.com/5c14e387dab576fe667689cf/61e11e22d8ff4a5b4a1b3346_Supportbutton-1.png"></a>`;
 			});
 
 		containerEl.createEl('h3', {
