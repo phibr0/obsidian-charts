@@ -75,6 +75,9 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    animation: {
+        			duration: 0
+    				},
                     scales: {
                         //@ts-ignore
                         r: {
@@ -98,6 +101,9 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    animation: {
+        			duration: 0
+    				},
                     indexAxis: yaml.indexAxis,
                     spanGaps: yaml.spanGaps,
                     scales: {
@@ -147,6 +153,9 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    animation: {
+        			duration: 0
+    				},
                     //@ts-ignore
                     spanGaps: yaml.spanGaps,
                 }
