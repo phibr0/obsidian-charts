@@ -55,7 +55,7 @@ export default class ChartPlugin extends Plugin {
 				XVals.push((y[i] - intercept) / gradient)
 			}
 
-			if (data.bestFitTitle != undefined) {
+			if (data.bestFitTitle != undefined && data.bestFitTitle != "undefined") {
 				var title = String(data.bestFitTitle);
 			} else {
 				var title = "Line of Best Fit";
