@@ -26,34 +26,45 @@ export default class ChartPlugin extends Plugin {
 				return;
 			}
 		}
-		console.log(data)
 		if (data.bestFit === true && data.type === "line") {
-			console.log("Best Fit is ENABLED!")
-			let x=data.series[0].data;
-			let y=data.labels;
-			let outX=0;
-			let outY=0;
-			let outX2=0;
-			let outXY=0;
-			for (let i=0; i<x.length; ++i) {
+			if (data.bestFitNumber != undefined) {
+				var x = data.series[Number(data.bestFitNumber)].data;
+			} else {
+				// Default to line 0
+				var x = data.series[0].data;
+			}
+
+			let y = data.labels;
+			let outX = 0;
+			let outY = 0;
+			let outX2 = 0;
+			let outXY = 0;
+
+			for (let i = 0; i < x.length; ++i) {
 				outX = outX + x[i]
 				outY = outY + y[i]
 				outX2 = outX2 + (x[i] * x[i])
 				outXY = outXY + (x[i] * y[i])
 			}
-			let gradient = (x.length*outXY-(outY*outX)) / (x.length*outX2-(outX*outX))
-			let intercept = (outY-(gradient*outX))/x.length
+			let gradient = (x.length * outXY - (outY * outX)) / (x.length * outX2 - (outX * outX))
+			let intercept = (outY - (gradient * outX)) / x.length
+
 			// Form points from equation
 			let XVals = [];
-			for (let i=0; i<y.length; ++i) {
-				XVals.push((y[i]-intercept)/gradient)
+			for (let i = 0; i < y.length; ++i) {
+				XVals.push((y[i] - intercept) / gradient)
 			}
+
 			if (data.bestFitTitle != undefined) {
-				data.series[1].title = data.bestFitTitle
+				var title = String(data.bestFitTitle);
 			} else {
-				data.series[1].title = "Line of Best Fit"
+				var title = "Line of Best Fit";
 			}
-			data.series[1].data = XVals
+			// Create line
+			data.series.push({
+				title: title,
+				data: XVals
+			})
 		}
 		await this.renderer.renderFromYaml(data, el, ctx);
 	}
