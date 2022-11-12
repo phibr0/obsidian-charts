@@ -1,18 +1,18 @@
-# Advanced-Charts
+# Obsidian-Charts
 
-This Plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
+This plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
 
-**[Read the original Documentation](https://charts.phibr0.de)** - Needs to be udated
+**[Read the original Documentation](https://charts.phibr0.de)** - Needs to be updated
 
 ## How to install
 
-1. Head over to releases and download the lastest [release](https://github.com/Wemmy0/obsidian-charts/releases) .zip
-2. Go into obsidian settings (bottom left of the screen) > Community Plugins (Enable them if you haven't already) > The folder icon
-3. Extract the .zip file you downloaded into the plugins folder.
-4. Back in obsidian, click the reload button next to the folder icon.
+1. Go to **Community Plugins** in your [Obsidian](https://www.obsidian.md) Settings and **disable** Safe Mode
+2. Click on **Browse** and search for "Obsidian Charts"
+3. Click install
+4. Toggle the Plugin on in the **Community Plugins** Tab
 
-## Support the original dev
+## Support me
 
-If you find this Plugin helpful, consider supporting the old dev of obsidian-charts:
+If you find this Plugin helpful, consider supporting me:
 
 <a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?slug=phibr0&font_family=Inter&button_colour=FFDD00"></a>
