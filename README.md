@@ -1,4 +1,4 @@
-# Obsidian-Charts
+# Obsidian-Charts [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/phibr0/obsidian-charts)](https://github.com/phibr0/obsidian-charts/releases) [![Release Obsidian Plugin](https://github.com/phibr0/obsidian-charts/actions/workflows/release.yml/badge.svg)](https://github.com/phibr0/obsidian-charts/actions/workflows/release.yml) ![GitHub all releases](https://img.shields.io/github/downloads/phibr0/obsidian-charts/total)
 
 This plugin lets you create interactive Charts in [Obsidian](https://www.obsidian.md).
 
