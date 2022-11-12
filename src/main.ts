@@ -9,12 +9,10 @@ import { chartFromTable } from 'src/chartFromTable';
 import { base64ToArrayBuffer, renderError, saveImageToVaultAndPaste } from 'src/util';
 
 export default class ChartPlugin extends Plugin {
-
 	settings: ChartPluginSettings;
 	renderer: Renderer;
 
 	postprocessor = async (content: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
-
 		let data;
 		try {
 			data = await parseYaml(content.replace(/	/g, '    '));
@@ -22,14 +20,41 @@ export default class ChartPlugin extends Plugin {
 			renderError(error, el);
 			return;
 		}
-
 		if(!data.id) {
 			if (!data || !data.type || !data.labels || !data.series) {
 				renderError("Missing type, labels or series", el)
 				return;
 			}
 		}
-
+		console.log(data)
+		if (data.bestFit === true && data.type === "line") {
+			console.log("Best Fit is ENABLED!")
+			let x=data.series[0].data;
+			let y=data.labels;
+			let outX=0;
+			let outY=0;
+			let outX2=0;
+			let outXY=0;
+			for (let i=0; i<x.length; ++i) {
+				outX = outX + x[i]
+				outY = outY + y[i]
+				outX2 = outX2 + (x[i] * x[i])
+				outXY = outXY + (x[i] * y[i])
+			}
+			let gradient = (x.length*outXY-(outY*outX)) / (x.length*outX2-(outX*outX))
+			let intercept = (outY-(gradient*outX))/x.length
+			// Form points from equation
+			let XVals = [];
+			for (let i=0; i<y.length; ++i) {
+				XVals.push((y[i]-intercept)/gradient)
+			}
+			if (data.bestFitTitle != undefined) {
+				data.series[1].title = data.bestFitTitle
+			} else {
+				data.series[1].title = "Line of Best Fit"
+			}
+			data.series[1].data = XVals
+		}
 		await this.renderer.renderFromYaml(data, el, ctx);
 	}
 
@@ -42,7 +67,7 @@ export default class ChartPlugin extends Plugin {
 	}
 
 	async onload() {
-		console.log('loading plugin: Obsidian Charts');
+		console.log('loading plugin: Advanced Charts');
 
 		await this.loadSettings()
 
@@ -135,7 +160,7 @@ export default class ChartPlugin extends Plugin {
 	}
 
 	onunload() {
-		console.log('unloading plugin: Obsidian Charts');
+		console.log('unloading plugin: Advanced Charts');
 	}
 
 }

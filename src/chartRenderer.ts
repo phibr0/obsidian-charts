@@ -9,7 +9,7 @@ Chart.register(...registerables);
 
 // I need to refactor this
 // Or just rewrite it completely
-// Its a mess
+// It's a mess
 
 export default class Renderer {
     plugin: ChartPlugin;
@@ -66,7 +66,7 @@ export default class Renderer {
             },
         };
         Chart.defaults.layout.padding = yaml.padding;
-        
+
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             (chartOptions as ChartConfiguration<"polarArea" | "radar">) = {
                 type: yaml.type,
@@ -76,8 +76,8 @@ export default class Renderer {
                 },
                 options: {
                     animation: {
-        			duration: 0
-    				},
+                        duration: 0
+                    },
                     scales: {
                         //@ts-ignore
                         r: {
@@ -102,8 +102,8 @@ export default class Renderer {
                 },
                 options: {
                     animation: {
-        			duration: 0
-    				},
+                        duration: 0
+                    },
                     indexAxis: yaml.indexAxis,
                     spanGaps: yaml.spanGaps,
                     scales: {
@@ -154,8 +154,8 @@ export default class Renderer {
                 },
                 options: {
                     animation: {
-        			duration: 0
-    				},
+                        duration: 0
+                    },
                     //@ts-ignore
                     spanGaps: yaml.spanGaps,
                 }
