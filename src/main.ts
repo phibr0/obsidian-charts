@@ -78,7 +78,7 @@ export default class ChartPlugin extends Plugin {
 	}
 
 	async onload() {
-		console.log('loading plugin: Advanced Charts');
+		console.log('loading plugin: Obsidian Charts');
 
 		await this.loadSettings()
 
@@ -151,7 +151,7 @@ export default class ChartPlugin extends Plugin {
 		});
 
 		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
-		this.registerMarkdownCodeBlockProcessor('advanced-chart', async (data, el) => this.renderer.renderRaw(await JSON.parse(data), el));
+		this.registerMarkdownCodeBlockProcessor('obsidian-chart', async (data, el) => this.renderer.renderRaw(await JSON.parse(data), el));
 
 		// Remove this ignore when the obsidian package is updated on npm
 		// Editor mode
@@ -171,7 +171,7 @@ export default class ChartPlugin extends Plugin {
 	}
 
 	onunload() {
-		console.log('unloading plugin: Advanced Charts');
+		console.log('unloading plugin: Obsidian Charts');
 	}
 
 }
