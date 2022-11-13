@@ -151,7 +151,7 @@ export default class ChartPlugin extends Plugin {
 		});
 
 		this.registerMarkdownCodeBlockProcessor('chart', this.postprocessor);
-		this.registerMarkdownCodeBlockProcessor('advanced-chart', async (data, el) => this.renderer.renderRaw(await JSON.parse(data), el));
+		this.registerMarkdownCodeBlockProcessor('obsidian-chart', async (data, el) => this.renderer.renderRaw(await JSON.parse(data), el));
 
 		// Remove this ignore when the obsidian package is updated on npm
 		// Editor mode
