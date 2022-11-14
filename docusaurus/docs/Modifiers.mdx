@@ -52,6 +52,42 @@ The `fill` Modifier is used in Line Charts to fill the Area under the Traces.
 ```
 ````
 
+## `bestFit` Modifiers
+
+The `bestFit` Modifier is used in Line Charts to generate a line of best fit for the given line.
+
+- Expected: `boolean` (`true` or `false`)
+- Default: `false`
+
+The `bestFitTitle` Optional modifier is used with `bestFit` to specify a title for the line of best fit.
+
+- Expected: `string`
+- Default: `Line of Best Fit`
+
+The `bestFitNumber` Optional modifier is used with the `bestFit` modifier to specify a line for `bestFit` to use.
+
+- Expected: `integer` (`0` for the first line, `1` for the second line, ...)
+- Default: `0`
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [1,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,1]
+        - title: Title 3
+        data: [8,2,5,-1,4]
+    bestFit: true
+    bestFitTitle: "Best Fit Title!"
+    bestFitNumber: 1
+```
+````
+
 ## `spanGaps` Modifier
 
 The `spanGaps` Modifier is used to fill in missing Datapoints.

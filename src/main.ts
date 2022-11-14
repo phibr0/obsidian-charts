@@ -6,7 +6,7 @@ import { ChartSettingTab } from './ui/settingsTab';
 import { CreationHelperModal } from './ui/creationHelperModal';
 import { addIcons } from 'src/ui/icons';
 import { chartFromTable } from 'src/chartFromTable';
-import { base64ToArrayBuffer, renderError, saveImageToVaultAndPaste } from 'src/util';
+import { renderError, saveImageToVaultAndPaste } from 'src/util';
 
 export default class ChartPlugin extends Plugin {
 	settings: ChartPluginSettings;
@@ -50,12 +50,12 @@ export default class ChartPlugin extends Plugin {
 			let intercept = (outY - (gradient * outX)) / x.length
 
 			// Form points from equation
-			let XVals = [];
+			let YVals = [];
 			for (let i = 0; i < y.length; ++i) {
-				XVals.push((y[i] - intercept) / gradient)
+				YVals.push((y[i] - intercept) / gradient)
 			}
 
-			if (data.bestFitTitle != undefined) {
+			if (data.bestFitTitle != undefined && data.bestFitTitle != "undefined") {
 				var title = String(data.bestFitTitle);
 			} else {
 				var title = "Line of Best Fit";
@@ -63,7 +63,7 @@ export default class ChartPlugin extends Plugin {
 			// Create line
 			data.series.push({
 				title: title,
-				data: XVals
+				data: YVals
 			})
 		}
 		await this.renderer.renderFromYaml(data, el, ctx);
