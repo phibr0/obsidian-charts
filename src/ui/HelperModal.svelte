@@ -2,6 +2,7 @@
   import { debounce, Editor, parseYaml } from "obsidian";
   import type Renderer from "../chartRenderer";
   import { createEventDispatcher } from "svelte";
+  import CollapsibleSection from './CollapsibleSection.svelte'
   import { renderError } from "src/util";
   import type { DataField } from "src/constants/settingsConstants";
 import type { Chart } from "chart.js";
@@ -207,6 +208,8 @@ bestFitNumber: ${bestFitNumber}`;
         </div>
       </table>
       <hr />
+      <CollapsibleSection headerText={'Line of Best Fit'} >
+        <hr>
       <table style="width:100%">
         <tr>
           <td class="desc"
@@ -246,6 +249,7 @@ bestFitNumber: ${bestFitNumber}`;
           /><br />
         </tr>
       </table>
+        </CollapsibleSection>
     </div>
     <div class="chartPreview">
       <div id="preview" bind:this={previewElement} />
