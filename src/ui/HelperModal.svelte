@@ -208,13 +208,13 @@ bestFitNumber: ${bestFitNumber}`;
         </div>
       </table>
       <hr />
-      <CollapsibleSection headerText={'Line of Best Fit'} >
+      <CollapsibleSection headerText={'Line of Best Fit (Line chart only)'} >
         <hr>
       <table style="width:100%">
         <tr>
           <td class="desc"
           ><p class="mainDesc">Line of Best Fit</p>
-            <p class="subDesc">Create a line of best fit. (Line charts only)</p></td
+            <p class="subDesc">Create a line of best fit</p></td
           ><td class="controlElement"
         ><input
                 type="checkbox"
