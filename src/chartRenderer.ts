@@ -6,7 +6,9 @@ import { generateInnerColors, renderError } from 'src/util';
 import type { ImageOptions } from './constants/settingsConstants';
 import type ChartPlugin from 'src/main';
 import { generateTableData } from 'src/chartFromTable';
-Chart.register(...registerables, SankeyController, Flow);
+import annotationPlugin from 'chartjs-plugin-annotation'
+
+Chart.register(...registerables, annotationPlugin, SankeyController, Flow);
 
 // I need to refactor this
 // Or just rewrite it completely

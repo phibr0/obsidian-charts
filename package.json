@@ -33,7 +33,8 @@
         "chroma-js": "^2.1.2",
         "markdown-tables-to-json": "^0.1.7",
         "svelte": "^3.35.0",
-        "vanilla-picker": "^2.11.2"
+        "vanilla-picker": "^2.11.2",
+        "chartjs-plugin-annotation": "^2.2.1"
     },
     "moduleFileExtensions": [
         "js",
