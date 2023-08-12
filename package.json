@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "chart.js": "^3.9.1",
+        "chartjs-chart-sankey": "^0.12.0",
         "chroma-js": "^2.1.2",
         "markdown-tables-to-json": "^0.1.7",
         "svelte": "^3.35.0",
