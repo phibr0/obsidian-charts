@@ -69,7 +69,7 @@ export default class Renderer {
 
         let chartOptions: ChartConfiguration;
 
-        Chart.defaults.color = getComputedStyle(el).getPropertyValue('--text-muted');
+        Chart.defaults.color = yaml.textColor || getComputedStyle(el).getPropertyValue('--text-muted');
         Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
         Chart.defaults.plugins = {
             ...Chart.defaults.plugins,
