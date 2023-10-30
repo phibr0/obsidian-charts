@@ -1,14 +1,13 @@
-import { Chart, ChartConfiguration, SankeyControllerDatasetOptions, registerables } from 'chart.js';
-import { SankeyController, Flow } from 'chartjs-chart-sankey';
+import { Chart, ChartConfiguration, RadarControllerChartOptions, registerables } from 'chart.js';
 import './date-adapter/chartjs-adapter-moment.esm.js';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml, TFile } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
-import type { ImageOptions } from './constants/settingsConstants';
+import type { ChartPluginSettings, ImageOptions } from './constants/settingsConstants';
 import type ChartPlugin from 'src/main';
 import { generateTableData } from 'src/chartFromTable';
 import annotationPlugin from 'chartjs-plugin-annotation'
 
-Chart.register(...registerables, annotationPlugin, SankeyController, Flow);
+Chart.register(...registerables, annotationPlugin);
 
 // I need to refactor this
 // Or just rewrite it completely
@@ -38,26 +37,15 @@ export default class Renderer {
                 }
             }
             for (let i = 0; yaml.series.length > i; i++) {
-                const {title, ...rest} = yaml.series[i];
-                const dataset = {
-                    label: title ?? "",
+                datasets.push({
+                    label: yaml.series[i].title ?? "",
+                    data: yaml.series[i].data,
                     backgroundColor: yaml.labelColors ? colors.length ? generateInnerColors(colors, yaml.transparency) : generateInnerColors(this.plugin.settings.colors, yaml.transparency) : colors.length ? generateInnerColors(colors, yaml.transparency)[i] : generateInnerColors(this.plugin.settings.colors, yaml.transparency)[i],
                     borderColor: yaml.labelColors ? colors.length ? colors : this.plugin.settings.colors : colors.length ? colors[i] : this.plugin.settings.colors[i],
                     borderWidth: 1,
                     fill: yaml.fill ? yaml.stacked ? i == 0 ? 'origin' : '-1' : true : false, //See https://github.com/phibr0/obsidian-charts/issues/53#issuecomment-1084869550
                     tension: yaml.tension ?? 0,
-                    ...rest,
-                };
-                if (yaml.type === 'sankey') {
-                    // colorFrom, colorTo is accepted as object in yaml, but should be function for sankey.
-                    if (dataset.colorFrom)
-                        (dataset as SankeyControllerDatasetOptions).colorFrom = (c) => yaml.series[i].colorFrom[c.dataset.data[c.dataIndex].from] ?? colors[i] ?? 'green'
-                    
-                    if (dataset.colorTo)
-                        (dataset as SankeyControllerDatasetOptions).colorTo = (c) => yaml.series[i].colorTo[c.dataset.data[c.dataIndex].to] ?? colors[i] ?? 'green'
-                    
-                }
-                datasets.push(dataset);
+                });
             }
         }
 
@@ -159,34 +147,7 @@ export default class Renderer {
                     },
                 }
             };
-        } else if (yaml.type === 'sankey') {
-            datasets = datasets.map(dataset => {
-                return {
-                    ...dataset,
-                    data: dataset.data.map((item: object | any[]) => 
-                        Array.isArray(item) && item.length === 3 ?
-                        {
-                            from: item[0],
-                            flow: item[1],
-                            to: item[2],
-                        } : item
-                    )
-                }
-            }) as ChartConfiguration<'sankey'>['data']['datasets'];
-            
-            (chartOptions as ChartConfiguration<'sankey'>) = {
-                type: yaml.type,
-                data: {
-                    labels,
-                    datasets,
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                }
-            }
-        }else {
+        } else {
             (chartOptions as ChartConfiguration<"pie" | "doughnut" | "bubble" | "scatter">) = {
                 type: yaml.type,
                 data: {
