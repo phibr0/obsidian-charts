@@ -172,25 +172,25 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^3.9.1:
+chart.js@^3.9.1, chart.js@>=3.3.0, chart.js@>=3.7.0:
   version "3.9.1"
   resolved "https://registry.npmjs.org/chart.js/-/chart.js-3.9.1.tgz"
   integrity sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==
 
 chartjs-chart-sankey@^0.12.0:
   version "0.12.0"
-  resolved "https://registry.yarnpkg.com/chartjs-chart-sankey/-/chartjs-chart-sankey-0.12.0.tgz#eef091d84dd57a1953606b46e021d60099fe46ce"
+  resolved "https://registry.npmjs.org/chartjs-chart-sankey/-/chartjs-chart-sankey-0.12.0.tgz"
   integrity sha512-2f0YfDWNTTDqztVALlD2YMdSbpmjxdxHpcpKgBi9cUq3IPWBvHb58h4gIa7GjsYVjMLwX6gusDXgxlh9PMKkkA==
 
-"chartjs-plugin-annotation@^2.2.1":
-  "integrity" "sha512-RL9UtrFr2SXd7C47zD0MZqn6ZLgrcRt3ySC6cYal2amBdANcYB1QcwFXcpKWAYnO4SGJYRok7P5rKDDNgJMA/w=="
-  "resolved" "https://registry.yarnpkg.com/chartjs-plugin-annotation/-/chartjs-plugin-annotation-2.2.1.tgz#b7c359e46814b27632d9648584435d64c183427c"
-  "version" "2.2.1"
+chartjs-plugin-annotation@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/chartjs-plugin-annotation/-/chartjs-plugin-annotation-2.2.1.tgz"
+  integrity sha512-RL9UtrFr2SXd7C47zD0MZqn6ZLgrcRt3ySC6cYal2amBdANcYB1QcwFXcpKWAYnO4SGJYRok7P5rKDDNgJMA/w==
 
-"chokidar@^3.4.1":
-  "integrity" "sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw=="
-  "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-3.5.3.tgz"
-  "version" "3.5.3"
+chokidar@^3.4.1:
+  version "3.5.3"
+  resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.5.3.tgz"
+  integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
   dependencies:
     anymatch "~3.1.2"
     braces "~3.0.2"
@@ -251,7 +251,7 @@ esbuild-svelte@^0.5.4:
   dependencies:
     svelte "^3.44.0"
 
-esbuild@^0.12.26:
+esbuild@^0.12.26, esbuild@>=0.9.6:
   version "0.12.29"
   resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.12.29.tgz"
   integrity sha512-w/XuoBCSwepyiZtIRsKsetiLDUVGPVw1E/R3VTFSecIy8UR7Cq3SOtwKHJMFoVqqVG36aGkzh4e8BvpO1Fdc7g==
@@ -285,7 +285,7 @@ fs.realpath@^1.0.0:
 
 fsevents@~2.3.2:
   version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1:
@@ -531,7 +531,7 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.45.2:
+rollup@^1.20.0||^2.0.0, rollup@^2.14.0, rollup@^2.22.0, rollup@^2.45.2, rollup@>=2.0.0:
   version "2.77.0"
   resolved "https://registry.npmjs.org/rollup/-/rollup-2.77.0.tgz"
   integrity sha512-vL8xjY4yOQEw79DvyXLijhnhh+R/O9zpF/LEgkCebZFtb6ELeN9H3/2T0r8+mp+fFTBHZ5qGpOpW2ela2zRt3g==
@@ -621,7 +621,7 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.7.0:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.35.0, svelte@^3.44.0:
+svelte@^3.23.0, svelte@^3.24.0, svelte@^3.35.0, svelte@^3.44.0, svelte@>=3.5.0:
   version "3.49.0"
   resolved "https://registry.npmjs.org/svelte/-/svelte-3.49.0.tgz"
   integrity sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==
@@ -633,12 +633,12 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tslib@^2.0.0, tslib@^2.0.3:
+tslib@*, tslib@^2.0.0, tslib@^2.0.3:
   version "2.4.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
-typescript@*, typescript@^4.2.4:
+typescript@*, "typescript@^3.9.5 || ^4.0.0", typescript@^4.2.4, typescript@>=3.4.0:
   version "4.7.4"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.7.4.tgz"
   integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
