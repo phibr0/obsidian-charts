@@ -6,8 +6,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Obsidian Charts',
-  tagline: 'Create editable, interactive and animated Charts in Obsidian via Chart.js ',
+  title: 'Charts',
+  tagline:
+    'Create editable, interactive and animated Charts in Obsidian via Chart.js ',
   url: 'https://charts.phibr0.de',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -43,7 +44,7 @@ const config = {
             type: 'doc',
             docId: 'index',
             position: 'left',
-            label: 'Obsidian Charts Docs',
+            label: 'Charts Docs',
           },
           {
             href: 'https://github.com/phibr0/obsidian-charts',
@@ -65,17 +66,17 @@ const config = {
             ],
           },
           {
-            title: 'Contact', 
+            title: 'Contact',
             items: [
               {
                 label: 'GitHub',
-                to: 'https://github.com/phibr0'
+                to: 'https://github.com/phibr0',
               },
               {
                 label: 'Support me',
-                to: 'https://buymeacoffe.com/phibr0'
-              }
-            ]
+                to: 'https://buymeacoffe.com/phibr0',
+              },
+            ],
           },
           {
             title: 'More',

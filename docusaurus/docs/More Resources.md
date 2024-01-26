@@ -1,4 +1,5 @@
-Some people share their creations made with Obsidian Charts. Here is a list of some of them:
+Some people share their creations made with Charts. Here is a list of some of
+them:
 
 - [Mulfok's Periodic Note Templates](https://github.com/mulfok/periodic-note-templates)
 
