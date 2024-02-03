@@ -1,5 +1,6 @@
 import { Chart, ChartConfiguration, SankeyControllerDatasetOptions, registerables } from 'chart.js';
 import { SankeyController, Flow } from 'chartjs-chart-sankey';
+import zoomPlugin from 'chartjs-plugin-zoom';
 import './date-adapter/chartjs-adapter-moment.esm.js';
 import { MarkdownPostProcessorContext, MarkdownRenderChild, parseYaml, TFile } from 'obsidian';
 import { generateInnerColors, renderError } from 'src/util';
@@ -8,7 +9,7 @@ import type ChartPlugin from 'src/main';
 import { generateTableData } from 'src/chartFromTable';
 import annotationPlugin from 'chartjs-plugin-annotation'
 
-Chart.register(...registerables, annotationPlugin, SankeyController, Flow);
+Chart.register(...registerables, annotationPlugin, SankeyController, Flow, zoomPlugin);
 
 // I need to refactor this
 // Or just rewrite it completely
