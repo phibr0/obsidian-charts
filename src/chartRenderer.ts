@@ -7,8 +7,9 @@ import type { ImageOptions } from './constants/settingsConstants';
 import type ChartPlugin from 'src/main';
 import { generateTableData } from 'src/chartFromTable';
 import annotationPlugin from 'chartjs-plugin-annotation'
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-Chart.register(...registerables, annotationPlugin, SankeyController, Flow);
+Chart.register(...registerables, annotationPlugin, ChartDataLabels, SankeyController, Flow);
 
 // I need to refactor this
 // Or just rewrite it completely
