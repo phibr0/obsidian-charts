@@ -29,5 +29,5 @@ export interface ImageOptions {
 
 export interface DataField {
     dataTitle: string;
-    data: string | string[];
+    data: string | (string | null)[];
 }

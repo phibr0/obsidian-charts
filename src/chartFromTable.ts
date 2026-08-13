@@ -9,7 +9,7 @@ type: bar
 labels: [${labels}]
 series:
 ${dataFields
-    .map((data) => `  - title: ${data.dataTitle}\n    data: [${data.data}]`)
+    .map((data) => `  - title: ${data.dataTitle}\n    data: [${(data.data as (string | null)[]).map((value) => value === null ? 'null' : value).join(', ')}]`)
     .join("\n")}
 width: 80%
 beginAtZero: true
@@ -30,9 +30,14 @@ export function generateTableData(table: string, layout: 'columns' | 'rows', sel
     let dataFields: DataField[] = Object.keys(fields).map((key) => {
         return {
             dataTitle: key,
-            data: Object.values(fields[key]) as string[]
+            data: (Object.values(fields[key]) as string[]).map((value) => value === undefined || value === null || value.trim() === '' ? null : value)
         }
     });
+
+    dataFields = dataFields.filter((field) =>
+        field.dataTitle.trim() !== '' ||
+        (field.data as (string | null)[]).some((value) => value !== null)
+    );
 
     if(selected) {
         dataFields = dataFields.filter(value => selected.contains(value.dataTitle));

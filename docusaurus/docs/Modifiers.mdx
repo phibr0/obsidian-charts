@@ -191,6 +191,51 @@ Determines where the legend will be displayed.
 - Expected `top`, `left`, `bottom`, `right`
 - Default: `top`
 
+## `title` Modifier
+
+Adds a title/caption above (or around) the chart.
+
+- Expected: `string`
+- Default: none (no title is shown)
+
+### Example
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [4,2,3,4,5]
+        - title: Title 2
+        data: [5,4,3,2,2]
+        - title: Title 3
+        data: [8,2,5,3,4]
+    title: My Chart Title
+```
+````
+
+## `titlePosition` Modifier
+
+Determines where the chart title will be displayed.
+
+- Expected `top`, `left`, `bottom`, `right`
+- Default: `top`
+
+## `titleColor` Modifier
+
+Sets the color of the chart title.
+
+- Expected: any valid CSS color
+- Default: adapts automatically to the current Obsidian theme (dark text on light themes, light text on dark themes)
+
+## `titleFontSize` Modifier
+
+Sets the font size (in px) of the chart title.
+
+- Expected: `int`
+- Default: `12`
+
 ## Axes Modifiers
 
 Valid for `bar` and `line` types only. 

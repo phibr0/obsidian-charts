@@ -69,17 +69,36 @@ export default class Renderer {
 
         let chartOptions: ChartConfiguration;
 
-        Chart.defaults.color = yaml.textColor || getComputedStyle(el).getPropertyValue('--text-muted');
-        Chart.defaults.font.family = getComputedStyle(el).getPropertyValue('--mermaid-font');
-        Chart.defaults.plugins = {
-            ...Chart.defaults.plugins,
-            legend: {
-                ...Chart.defaults.plugins.legend,
-                display: yaml.legend ?? true,
-                position: yaml.legendPosition ?? "top",
+        // NOTE: these must be set per-chart-instance (options.*) rather than on the
+        // shared, global Chart.defaults. Obsidian renders each chart codeblock via an
+        // async postprocessor, so multiple charts on the same page can render
+        // concurrently/interleaved - mutating Chart.defaults here caused one chart's
+        // title/legend/color/font/padding settings to leak into another chart's render.
+        const baseOptions = {
+            color: yaml.textColor || getComputedStyle(el).getPropertyValue('--text-muted'),
+            font: {
+                family: getComputedStyle(el).getPropertyValue('--mermaid-font'),
+            },
+            layout: {
+                padding: yaml.padding,
+            },
+            plugins: {
+                legend: {
+                    display: yaml.legend ?? true,
+                    position: yaml.legendPosition ?? "top",
+                },
+                title: {
+                    display: !!yaml.title,
+                    text: yaml.title,
+                    position: yaml.titlePosition ?? "top",
+                    color: yaml.titleColor || getComputedStyle(el).getPropertyValue('--text-normal'),
+                    font: {
+                        weight: 'bold',
+                        size: yaml.titleFontSize ?? 12,
+                    },
+                },
             },
         };
-        Chart.defaults.layout.padding = yaml.padding;
 
         if (yaml.type == 'radar' || yaml.type == 'polarArea') {
             (chartOptions as ChartConfiguration<"polarArea" | "radar">) = {
@@ -89,6 +108,7 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    ...baseOptions,
                     animation: {
                         duration: 0
                     },
@@ -115,6 +135,7 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    ...baseOptions,
                     animation: {
                         duration: 0
                     },
@@ -181,6 +202,7 @@ export default class Renderer {
                     datasets,
                 },
                 options: {
+                    ...baseOptions,
                     animation: {
                         duration: 0
                     },
@@ -194,6 +216,7 @@ export default class Renderer {
                     datasets
                 },
                 options: {
+                    ...baseOptions,
                     animation: {
                         duration: 0
                     },
