@@ -122,6 +122,7 @@ export default class Renderer {
                     spanGaps: yaml.spanGaps,
                     scales: {
                         y: {
+                            type: yaml.yType,
                             min: yaml.yMin,
                             max: yaml.yMax,
                             reverse: yaml.yReverse,
@@ -141,6 +142,7 @@ export default class Renderer {
                         //@ts-ignore
                         x: {
                             ...time,
+                            ...(yaml.xType ? { type: yaml.xType } : {}),
                             min: yaml.xMin,
                             max: yaml.xMax,
                             reverse: yaml.xReverse,
