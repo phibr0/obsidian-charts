@@ -239,6 +239,24 @@ Can reverse the axis it is applied to
 ```
 ````
 
+### `Type` Modifier
+
+Sets the scale type of the respective axis (like: `xType` or `yType`). Only applies to `line` and `bar` charts. Use `logarithmic` for a log scale.
+
+- Expected: `string` (`linear`, `logarithmic`, `category`, `time`, `timeseries`)
+- Default: Chart.js default for the axis
+
+````yaml
+```chart
+    type: line
+    labels: [Monday,Tuesday,Wednesday,Thursday,Friday]
+    series:
+        - title: Title 1
+        data: [1,10,100,1000,10000]
+    yType: logarithmic
+```
+````
+
 ### `Min` and `Max` Modifiers
 
 Can set the min and max of the respecitve axis (like: `xMax` or `yMin`). `Min` will override beginAtZero. 
